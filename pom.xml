@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.thompson.apps</groupId>
+	<artifactId>chess</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<packaging>jar</packaging>
+
+	<name>Chess Library</name>
+	<description>Application handles chess move validation</description>
+
+
+	<properties>
+		<!-- Java Version -->
+		<java.version>1.8</java.version>
+
+		<!-- Maven Dependency Version -->
+		<maven.compiler.version>3.8.1</maven.compiler.version>
+		<maven.site.version>3.7.1</maven.site.version>
+		<maven.surefire.version>2.19.1</maven.surefire.version>
+		<maven.appassembler.version>2.0.0</maven.appassembler.version>
+
+		<!-- External Dependency Versions -->
+		<junit.version>4.12</junit.version>
+		<spotbugs.version>4.2.0</spotbugs.version>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>${maven.site.version}</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven.surefire.version}</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>appassembler-maven-plugin</artifactId>
+				<version>${maven.appassembler.version}</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>assemble</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<platforms>
+						<platform>unix</platform>
+					</platforms>
+					<logsDirectory>logs</logsDirectory>
+					<includeConfigurationDirectoryInClasspath>false</includeConfigurationDirectoryInClasspath>
+					<copyConfigurationDirectory>true</copyConfigurationDirectory>
+					<repositoryName>lib</repositoryName>
+					<repositoryLayout>flat</repositoryLayout>
+					<binFileExtensions>
+						<unix>.sh</unix>
+					</binFileExtensions>
+					<programs>
+						<program>
+							<mainClass>com.thompson.apps.chess.Main</mainClass>
+							<commandLineArguments>
+								<commandLineArgument>$BASEDIR</commandLineArgument>
+							</commandLineArguments>
+							<id>RunChessValidation</id>
+						</program>
+					</programs>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-maven-plugin</artifactId>
+				<version>${spotbugs.version}</version>
+			</plugin>
+		</plugins>
+	</reporting>
+</project>
