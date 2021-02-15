@@ -84,7 +84,7 @@
 							<commandLineArguments>
 								<commandLineArgument>$BASEDIR</commandLineArgument>
 							</commandLineArguments>
-							<id>RunChessValidation</id>
+							<id>RunChess</id>
 						</program>
 					</programs>
 				</configuration>
