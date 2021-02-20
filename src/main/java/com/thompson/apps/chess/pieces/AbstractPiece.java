@@ -394,6 +394,39 @@ public abstract class AbstractPiece {
 	}
 	
 	/**
+	 * FUNCTION_ABSTRACT: validateMoves
+	 * 
+	 * PURPOSE: Validates the moves based on the current state of the chess board
+	 * and the possible arrays of x and y positions of the piece.
+	 * 
+	 * Primarily used to validate positions for the Knight and King.
+	 * 
+	 * @param Cell boardPositions[][] - 2D Array of the Chess Board
+	 * @param int  xPositions[] - Array of possible X-Positions
+	 * @param int  yPositions[] - Array of possibly Y-Positions
+	 * 
+	 *             END FUNCTION_ABSTRACT
+	 */
+	public void validateMoves(Cell[][] board, int xPositions[], int yPositions[]) {
+		// Step 1. Iterate Each Position
+		for (int i = 0; i < 8; i++) {
+			int xP = xPositions[i];
+			int yP = yPositions[i];
+
+			// Step 2. Verify that we are still on the board
+			if ((xP >= 0 && xP < 8) && (yP >= 0 && yP < 8)) {
+				Cell c = board[xP][yP];
+				AbstractPiece p = c.getPiece();
+
+				// Step 3. If there is no piece at the cell or the piece is not equal to the
+				// same color, add the cell as a valid move
+				if (null == p || this.isWhite() != p.isWhite()) {
+					validMoves.add(c);
+				}
+			}
+		}}
+	
+	/**
 	 * FUNCTION_ABSTRACT: getPieceEnum
 	 * 
 	 * PURPOSE: Returns the Piece Enum

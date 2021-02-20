@@ -51,23 +51,8 @@ public class Knight extends AbstractPiece {
 				
 		};
 
-		// Step 3. Iterate Each Position
-		for (int i = 0; i < 8; i++) {
-			int xP = xPositions[i];
-			int yP = yPositions[i];
-
-			// Step 4. Verify that we are still on the board
-			if ((xP >= 0 && xP < 8) && (yP >= 0 && yP < 8)) {
-				Cell c = board[xP][yP];
-				AbstractPiece p = c.getPiece();
-
-				// Step 5. If there is no piece at the cell or the piece is not equal to the
-				// same color, add the cell as a valid move
-				if (null == p || this.isWhite() != p.isWhite()) {
-					validMoves.add(c);
-				}
-			}
-		}
+		// Step 3. Iterate over all possible moves
+		validateMoves(board, xPositions, yPositions);
 
 		return validMoves;
 	}
