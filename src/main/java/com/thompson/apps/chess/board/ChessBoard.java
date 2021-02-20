@@ -1,5 +1,6 @@
 package com.thompson.apps.chess.board;
 
+import com.thompson.apps.chess.pieces.AbstractPiece;
 import com.thompson.apps.chess.pieces.Bishop;
 import com.thompson.apps.chess.pieces.King;
 import com.thompson.apps.chess.pieces.Knight;
@@ -78,6 +79,49 @@ public class ChessBoard {
 		for (int i = 0; i < 8; i++) {
 			board[pawnRow][i] = new Cell(pawnRow, i, new Pawn(white, pawnRow, i));
 		}
+	}
+
+	/**
+	 * FUNCTION_ABSTRACT: setCustomPiece
+	 * 
+	 * PURPOSE: Sets one custom piece on the board
+	 * 
+	 * NOTE: This method is primarily used for testing purposes.
+	 * 
+	 * @param AbstractPiece 
+	 * 		p - Custom Piece to be set
+	 * 
+	 *      END FUNCTION_ABSTRACT
+	 */
+	public void setCustomPiece(AbstractPiece p) {
+		int row = p.getX();
+		int column = p.getY();
+		board[row][column] = new Cell(row, column, p);
+	}
+
+	/**
+	 * FUNCTION_ABSTRACT: printBoard
+	 * 
+	 * PURPOSE: Prints the entirety of the board with the pieces
+	 * 
+	 * END FUNCTION_ABSTRACT
+	 */
+	public String printBoard() {
+		StringBuilder stringBuilder = new StringBuilder(64);
+		
+		for (int i = board.length - 1; i >= 0; i--) {
+			for (int j = 0; j < board[i].length; j++) {
+				if (board[i][j].getPiece() != null) {
+					stringBuilder.append(board[i][j].getPiece().toString());
+				} else {
+					stringBuilder.append(" ");
+				}
+			}
+			
+			stringBuilder.append("\n");
+		}
+
+		return stringBuilder.toString();
 	}
 
 	/**
