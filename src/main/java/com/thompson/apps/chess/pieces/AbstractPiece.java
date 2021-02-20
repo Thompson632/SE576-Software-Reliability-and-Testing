@@ -67,6 +67,23 @@ public abstract class AbstractPiece {
 	public abstract List<Cell> getValidMoves(Cell board[][]);
 	
 	/**
+	 * FUNCTION_ABSTRACT: validateVerticalMoves
+	 * 
+	 * PURPOSE: Validates North and South Vertical Moves
+	 * 
+	 * @param Cell[][] board
+	 * 
+	 *                 END FUNCTION_ABSTRACT
+	 */
+	public void validateVerticalMoves(Cell[][] board) {
+		int posX = getX() + 1;
+		validateNorthMoves(board, posX);
+
+		posX = getX() - 1;
+		validateSouthMoves(board, posX);
+	}
+
+	/**
 	 * FUNCTION_ABSTRACT: validateHorizontalMoves
 	 * 
 	 * PURPOSE: Validates East and West Horizontal Moves
@@ -76,29 +93,12 @@ public abstract class AbstractPiece {
 	 *                 END FUNCTION_ABSTRACT
 	 */
 	public void validateHorizontalMoves(Cell[][] board) {
-		int posX = getX() - 1;
-		validateWestMoves(board, posX);
+		int posY = getY() + 1;
+		validateEastMoves(board, posY);
 
-		posX = getX() + 1;
-		validateEastMoves(board, posX);
+		posY = getY() - 1;
+		validateWestMoves(board, posY);
 
-	}
-
-	/**
-	 * FUNCTION_ABSTRACT: validateVerticalMoves
-	 * 
-	 * PURPOSE: Validates South and North Vertical Moves
-	 * 
-	 * @param Cell[][] board
-	 * 
-	 *                 END FUNCTION_ABSTRACT
-	 */
-	public void validateVerticalMoves(Cell[][] board) {
-		int posY = getY() - 1;
-		validateSouthMoves(board, posY);
-
-		posY = getY() + 1;
-		validateNorthMoves(board, posY);
 	}
 
 	/**
@@ -113,11 +113,11 @@ public abstract class AbstractPiece {
 	public void validateDiagonalMoves(Cell[][] board) {
 		int posX = getX() + 1;
 		int posY = getY() - 1;
-		validateSouthEastMoves(board, posX, posY);
+		validateNorthWestMoves(board, posX, posY);
 
 		posX = getX() - 1;
 		posY = getY() + 1;
-		validateNorthWestMoves(board, posX, posY);
+		validateSouthEast(board, posX, posY);
 
 		posX = getX() - 1;
 		posY = getY() - 1;
@@ -130,17 +130,19 @@ public abstract class AbstractPiece {
 	}
 
 	/**
-	 * FUNCTION_ABSTRACT: validateSouthEastMoves
+	 * FUNCTION_ABSTRACT: validateNorthWestMoves
 	 * 
-	 * PURPOSE: Validates Diagonal South-East Moves
+	 * PURPOSE: Validates Diagonal North-West Moves
 	 * 
+	 * NOTE: Shifts each row upwards and each column to the left each iteration
+	 * 		 
 	 * @param Cell[][] board
 	 * @param int      posX
 	 * @param int      posY
 	 * 
 	 *                 END FUNCTION_ABSTRACT
 	 */
-	public void validateSouthEastMoves(Cell[][] board, int posX, int posY) {
+	public void validateNorthWestMoves(Cell[][] board, int posX, int posY) {
 		while (posX < 8 && posY >= 0) {
 			// Step 1. Check if the Initial Temporary Spot has a piece
 			if (null == board[posX][posY].getPiece()) {
@@ -164,9 +166,11 @@ public abstract class AbstractPiece {
 	}
 
 	/**
-	 * FUNCTION_ABSTRACT: validateNorthWestMoves
+	 * FUNCTION_ABSTRACT: validateSouthEast
 	 * 
-	 * PURPOSE: Validates Diagonal North-West Moves
+	 * PURPOSE: Validates Diagonal South-East Moves
+	 * 
+	 * NOTE: Shifts each row downwards and each column to the right each iteration
 	 * 
 	 * @param Cell[][] board
 	 * @param int      posX
@@ -174,7 +178,7 @@ public abstract class AbstractPiece {
 	 * 
 	 *                 END FUNCTION_ABSTRACT
 	 */
-	public void validateNorthWestMoves(Cell[][] board, int posX, int posY) {
+	public void validateSouthEast(Cell[][] board, int posX, int posY) {
 		while (posX >= 0 && posY < 8) {
 			// Step 1. Check if the Initial Temporary Spot has a piece
 			if (null == board[posX][posY].getPiece()) {
@@ -201,6 +205,8 @@ public abstract class AbstractPiece {
 	 * FUNCTION_ABSTRACT: validateSouthWestMoves
 	 * 
 	 * PURPOSE: Validates Diagonal South-West Moves
+	 * 
+	 * NOTE: Shifts each row downwards and each column to the left each iteration
 	 * 
 	 * @param Cell[][] board
 	 * @param int      posX
@@ -236,6 +242,8 @@ public abstract class AbstractPiece {
 	 * 
 	 * PURPOSE: Validates Diagonal North-East Moves
 	 * 
+	 * NOTE: Shifts each row upwards and each column to the right each iteration
+	 * 
 	 * @param Cell[][] board
 	 * @param int      posX
 	 * @param int      posY
@@ -264,50 +272,20 @@ public abstract class AbstractPiece {
 			posY++;
 		}
 	}
-
+	
 	/**
-	 * FUNCTION_ABSTRACT: validateWestMoves
+	 * FUNCTION_ABSTRACT: validateNorthMoves
 	 * 
-	 * PURPOSE: Validates Horizontal West Moves
+	 * PURPOSE: Validates Vertical North Moves
+	 * 
+	 * NOTE: Shifts each row upwards each iteration
 	 * 
 	 * @param Cell[][] board
 	 * @param int      posX
 	 * 
 	 *                 END FUNCTION_ABSTRACT
 	 */
-	public void validateWestMoves(Cell[][] board, int posX) {
-		while (posX >= 0) {
-			// Step 1. Check if the Initial Temporary Spot has a piece
-			if (null == board[posX][getY()].getPiece()) {
-				validMoves.add(board[posX][getY()]);
-			}
-			// Step 2. Check if the temporary spot has a piece of the same color
-			else if (this.isWhite() == board[posX][getY()].getPiece().isWhite()) {
-				break;
-			}
-			// Step 3. If the temporary spot has a piece
-			// and its not the current piece color,
-			// we can capture the piece
-			else {
-				validMoves.add(board[posX][getY()]);
-				break;
-			}
-
-			posX--;
-		}
-	}
-
-	/**
-	 * FUNCTION_ABSTRACT: validateEastMoves
-	 * 
-	 * PURPOSE: Validates Horizontal East Moves
-	 * 
-	 * @param Cell[][] board
-	 * @param int      posX
-	 * 
-	 *                 END FUNCTION_ABSTRACT
-	 */
-	public void validateEastMoves(Cell[][] board, int posX) {
+	public void validateNorthMoves(Cell[][] board, int posX) {
 		while (posX < 8) {
 			// Step 1. Check if the Initial Temporary Spot has a piece
 			if (null == board[posX][getY()].getPiece()) {
@@ -334,12 +312,82 @@ public abstract class AbstractPiece {
 	 * 
 	 * PURPOSE: Validates Vertical South Moves
 	 * 
+	 * NOTE: Shifts each row downwards each iteration
+	 * 
 	 * @param Cell[][] board
 	 * @param int      posX
 	 * 
 	 *                 END FUNCTION_ABSTRACT
 	 */
-	public void validateSouthMoves(Cell[][] board, int posY) {
+	public void validateSouthMoves(Cell[][] board, int posX) {
+		while (posX >= 0) {
+			// Step 1. Check if the Initial Temporary Spot has a piece
+			if (null == board[posX][getY()].getPiece()) {
+				validMoves.add(board[posX][getY()]);
+			}
+			// Step 2. Check if the temporary spot has a piece of the same color
+			else if (this.isWhite() == board[posX][getY()].getPiece().isWhite()) {
+				break;
+			}
+			// Step 3. If the temporary spot has a piece
+			// and its not the current piece color,
+			// we can capture the piece
+			else {
+				validMoves.add(board[posX][getY()]);
+				break;
+			}
+
+			posX--;
+		}
+	}
+	
+	/**
+	 * FUNCTION_ABSTRACT: validateEastMoves
+	 * 
+	 * PURPOSE: Validates Horizontal East Moves
+	 * 
+	 * NOTE: Shifts each column to the right each iteration
+	 * 
+	 * @param Cell[][] board
+	 * @param int      posY
+	 * 
+	 *                 END FUNCTION_ABSTRACT
+	 */
+	public void validateEastMoves(Cell[][] board, int posY) {
+		while (posY < 8) {
+			// Step 1. Check if the Initial Temporary Spot has a piece
+			if (null == board[getX()][posY].getPiece()) {
+				validMoves.add(board[getX()][posY]);
+			}
+			// Step 2. Check if the temporary spot has a piece of the same color
+			else if (this.isWhite() == board[getX()][posY].getPiece().isWhite()) {
+				break;
+			}
+			// Step 3. If the temporary spot has a piece
+			// and its not the current piece color,
+			// we can capture the piece
+			else {
+				validMoves.add(board[getX()][posY]);
+				break;
+			}
+			
+			posY++;
+		}
+	}
+
+	/**
+	 * FUNCTION_ABSTRACT: validateWestMoves
+	 * 
+	 * PURPOSE: Validates Horizontal West Moves
+	 * 
+	 * NOTE: Shifts each column to the left each iteration
+	 * 
+	 * @param Cell[][] board
+	 * @param int      posY
+	 * 
+	 *                 END FUNCTION_ABSTRACT
+	 */
+	public void validateWestMoves(Cell[][] board, int posY) {
 		while (posY >= 0) {
 			// Step 1. Check if the Initial Temporary Spot has a piece
 			if (null == board[getX()][posY].getPiece()) {
@@ -361,38 +409,6 @@ public abstract class AbstractPiece {
 		}
 	}
 
-	/**
-	 * FUNCTION_ABSTRACT: validateNorthMoves
-	 * 
-	 * PURPOSE: Validates Vertical North Moves
-	 * 
-	 * @param Cell[][] board
-	 * @param int      posX
-	 * 
-	 *                 END FUNCTION_ABSTRACT
-	 */
-	public void validateNorthMoves(Cell[][] board, int posY) {
-		while (posY < 8) {
-			// Step 1. Check if the Initial Temporary Spot has a piece
-			if (null == board[getX()][posY].getPiece()) {
-				validMoves.add(board[getX()][posY]);
-			}
-			// Step 2. Check if the temporary spot has a piece of the same color
-			else if (this.isWhite() == board[getX()][posY].getPiece().isWhite()) {
-				break;
-			}
-			// Step 3. If the temporary spot has a piece
-			// and its not the current piece color,
-			// we can capture the piece
-			else {
-				validMoves.add(board[getX()][posY]);
-				break;
-			}
-			
-			posY++;
-		}
-	}
-	
 	/**
 	 * FUNCTION_ABSTRACT: validateMoves
 	 * 

@@ -71,7 +71,7 @@ public class TestQueen {
 	@Test
 	public void testDefaultQueen_WhitePiece() {
 		// Queen
-		piece = new Queen(true, 0, 3);
+		piece = new Queen(true, Tile.D1.getX(), Tile.D1.getY());
 
 		// Assert Moves
 		moves = piece.getValidMoves(board.getChessBoard());
@@ -91,7 +91,7 @@ public class TestQueen {
 	@Test
 	public void testDefaultQueen_BlackPiece() {
 		// Queen
-		piece = new Queen(false, 7, 3);
+		piece = new Queen(false, Tile.D8.getX(), Tile.D8.getY());
 
 		// Assert Moves
 		moves = piece.getValidMoves(board.getChessBoard());
@@ -113,23 +113,23 @@ public class TestQueen {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Queen at 3, 3
-		piece = new Queen(true, 3, 3);
+		// Create Queen at D4
+		piece = new Queen(true, Tile.D4.getX(), Tile.D4.getY());
 		// Expected Moves
-		tileExpectedMoves.add(Tile.D3);
-		tileExpectedMoves.add(Tile.D2);
-		tileExpectedMoves.add(Tile.D1);
-		tileExpectedMoves.add(Tile.D5);
-		tileExpectedMoves.add(Tile.D6);
-		tileExpectedMoves.add(Tile.D7);
-		tileExpectedMoves.add(Tile.D8);
-		tileExpectedMoves.add(Tile.C4);
-		tileExpectedMoves.add(Tile.B4);
-		tileExpectedMoves.add(Tile.A4);
 		tileExpectedMoves.add(Tile.E4);
 		tileExpectedMoves.add(Tile.F4);
 		tileExpectedMoves.add(Tile.G4);
 		tileExpectedMoves.add(Tile.H4);
+		tileExpectedMoves.add(Tile.C4);
+		tileExpectedMoves.add(Tile.B4);
+		tileExpectedMoves.add(Tile.A4);
+		tileExpectedMoves.add(Tile.D5);
+		tileExpectedMoves.add(Tile.D6);
+		tileExpectedMoves.add(Tile.D7);
+		tileExpectedMoves.add(Tile.D8);
+		tileExpectedMoves.add(Tile.D3);
+		tileExpectedMoves.add(Tile.D2);
+		tileExpectedMoves.add(Tile.D1);
 		tileExpectedMoves.add(Tile.C5);
 		tileExpectedMoves.add(Tile.B6);
 		tileExpectedMoves.add(Tile.A7);
@@ -159,19 +159,19 @@ public class TestQueen {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Queen at 3, 3
-		piece = new Queen(true, 3, 3);
+		// Create Queen at D4
+		piece = new Queen(true, Tile.D4.getX(), Tile.D4.getY());
 		// Expected Moves
-		tileExpectedMoves.add(Tile.D3);
-		tileExpectedMoves.add(Tile.D2);
-		tileExpectedMoves.add(Tile.D1);
-		tileExpectedMoves.add(Tile.C4);
-		tileExpectedMoves.add(Tile.B4);
-		tileExpectedMoves.add(Tile.A4);
 		tileExpectedMoves.add(Tile.E4);
 		tileExpectedMoves.add(Tile.F4);
 		tileExpectedMoves.add(Tile.G4);
 		tileExpectedMoves.add(Tile.H4);
+		tileExpectedMoves.add(Tile.C4);
+		tileExpectedMoves.add(Tile.B4);
+		tileExpectedMoves.add(Tile.A4);
+		tileExpectedMoves.add(Tile.D3);
+		tileExpectedMoves.add(Tile.D2);
+		tileExpectedMoves.add(Tile.D1);
 		tileExpectedMoves.add(Tile.C5);
 		tileExpectedMoves.add(Tile.B6);
 		tileExpectedMoves.add(Tile.A7);
@@ -185,12 +185,12 @@ public class TestQueen {
 		tileExpectedMoves.add(Tile.F6);
 		tileExpectedMoves.add(Tile.G7);
 		tileExpectedMoves.add(Tile.H8);
-
+		
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Rook at 4, 3
-		AbstractPiece p = new Rook(true, 4, 3);
+		// Create Rook at D5
+		AbstractPiece p = new Rook(true, Tile.D5.getX(), Tile.D5.getY());
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -205,16 +205,16 @@ public class TestQueen {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Queen at 3, 3
-		piece = new Queen(true, 3, 3);
+		// Create Queen at D4
+		piece = new Queen(true, Tile.D4.getX(), Tile.D4.getY());
 		// Expected Moves
-		tileExpectedMoves.add(Tile.C4);
-		tileExpectedMoves.add(Tile.B4);
-		tileExpectedMoves.add(Tile.A4);
 		tileExpectedMoves.add(Tile.E4);
 		tileExpectedMoves.add(Tile.F4);
 		tileExpectedMoves.add(Tile.G4);
 		tileExpectedMoves.add(Tile.H4);
+		tileExpectedMoves.add(Tile.C4);
+		tileExpectedMoves.add(Tile.B4);
+		tileExpectedMoves.add(Tile.A4);
 		tileExpectedMoves.add(Tile.C5);
 		tileExpectedMoves.add(Tile.B6);
 		tileExpectedMoves.add(Tile.A7);
@@ -232,12 +232,12 @@ public class TestQueen {
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Rook at 4, 3
-		AbstractPiece p = new Rook(true, 4, 3);
+		// Create Rook at D5
+		AbstractPiece p = new Rook(true, Tile.D5.getX(), Tile.D5.getY());
 		board.setCustomPiece(p);
 
-		// Create Rook at 2, 3
-		p = new Rook(true, 2, 3);
+		// Create Rook at D3
+		p = new Rook(true, Tile.D3.getX(), Tile.D3.getY());
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -252,8 +252,8 @@ public class TestQueen {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Queen at 3, 3
-		piece = new Queen(true, 3, 3);
+		// Create Queen at D4
+		piece = new Queen(true, Tile.D4.getX(), Tile.D4.getY());
 		// Expected Moves
 		tileExpectedMoves.add(Tile.E4);
 		tileExpectedMoves.add(Tile.F4);
@@ -276,16 +276,16 @@ public class TestQueen {
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Rook at 4, 3
-		AbstractPiece p = new Rook(true, 4, 3);
+		// Create Rook at D5
+		AbstractPiece p = new Rook(true, Tile.D5.getX(), Tile.D5.getY());
 		board.setCustomPiece(p);
 
-		// Create Rook at 2, 3
-		p = new Rook(true, 2, 3);
+		// Create Rook at D3
+		p = new Rook(true, Tile.D3.getX(), Tile.D3.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 2
-		p = new Knight(true, 3, 2);
+		// Create Knight at C4
+		p = new Knight(true, Tile.C4.getX(), Tile.C4.getY());
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -300,8 +300,8 @@ public class TestQueen {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Queen at 3, 3
-		piece = new Queen(true, 3, 3);
+		// Create Queen at D4
+		piece = new Queen(true, Tile.D4.getX(), Tile.D4.getY());
 		// Expected Moves
 		tileExpectedMoves.add(Tile.C5);
 		tileExpectedMoves.add(Tile.B6);
@@ -316,24 +316,24 @@ public class TestQueen {
 		tileExpectedMoves.add(Tile.F6);
 		tileExpectedMoves.add(Tile.G7);
 		tileExpectedMoves.add(Tile.H8);
-
+		
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Rook at 4, 3
-		AbstractPiece p = new Rook(true, 4, 3);
+		// Create Rook at D5
+		AbstractPiece p = new Rook(true, Tile.D5.getX(), Tile.D5.getY());
 		board.setCustomPiece(p);
 
-		// Create Rook at 2, 3
-		p = new Rook(true, 2, 3);
+		// Create Rook at D3
+		p = new Rook(true, Tile.D3.getX(), Tile.D3.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 2
-		p = new Knight(true, 3, 2);
+		// Create Knight at C4
+		p = new Knight(true, Tile.C4.getX(), Tile.C4.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 4
-		p = new Knight(true, 3, 4);
+		// Create Knight at E4
+		p = new Knight(true, Tile.E4.getX(), Tile.E4.getY());
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -348,8 +348,8 @@ public class TestQueen {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Queen at 3, 3
-		piece = new Queen(true, 3, 3);
+		// Create Queen at D4
+		piece = new Queen(true, Tile.D4.getX(), Tile.D4.getY());
 		// Expected Moves
 		tileExpectedMoves.add(Tile.E3);
 		tileExpectedMoves.add(Tile.F2);
@@ -365,24 +365,24 @@ public class TestQueen {
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Rook at 4, 3
-		AbstractPiece p = new Rook(true, 4, 3);
+		// Create Rook at D5
+		AbstractPiece p = new Rook(true, Tile.D5.getX(), Tile.D5.getY());
 		board.setCustomPiece(p);
 
-		// Create Rook at 2, 3
-		p = new Rook(true, 2, 3);
+		// Create Rook at D3
+		p = new Rook(true, Tile.D3.getX(), Tile.D3.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 2
-		p = new Knight(true, 3, 2);
+		// Create Knight at C4
+		p = new Knight(true, Tile.C4.getX(), Tile.C4.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 4
-		p = new Knight(true, 3, 4);
+		// Create Knight at E4
+		p = new Knight(true, Tile.E4.getX(), Tile.E4.getY());
 		board.setCustomPiece(p);
 
-		// Create Bishop at 4, 2
-		p = new Bishop(true, 4, 2);
+		// Create Bishop at C5
+		p = new Bishop(true, Tile.C5.getX(), Tile.C5.getY());
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -397,8 +397,8 @@ public class TestQueen {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Queen at 3, 3
-		piece = new Queen(true, 3, 3);
+		// Create Queen at D4
+		piece = new Queen(true, Tile.D4.getX(), Tile.D4.getY());
 		// Expected Moves
 		tileExpectedMoves.add(Tile.E3);
 		tileExpectedMoves.add(Tile.F2);
@@ -410,28 +410,28 @@ public class TestQueen {
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Rook at 4, 3
-		AbstractPiece p = new Rook(true, 4, 3);
+		// Create Rook at D5
+		AbstractPiece p = new Rook(true, Tile.D5.getX(), Tile.D5.getY());
 		board.setCustomPiece(p);
 
-		// Create Rook at 2, 3
-		p = new Rook(true, 2, 3);
+		// Create Rook at D3
+		p = new Rook(true, Tile.D3.getX(), Tile.D3.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 2
-		p = new Knight(true, 3, 2);
+		// Create Knight at C4
+		p = new Knight(true, Tile.C4.getX(), Tile.C4.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 4
-		p = new Knight(true, 3, 4);
+		// Create Knight at E4
+		p = new Knight(true, Tile.E4.getX(), Tile.E4.getY());
 		board.setCustomPiece(p);
 
-		// Create Bishop at 4, 2
-		p = new Bishop(true, 4, 2);
+		// Create Bishop at C5
+		p = new Bishop(true, Tile.C5.getX(), Tile.C5.getY());
 		board.setCustomPiece(p);
 
-		// Create Bishop at 4, 4
-		p = new Bishop(true, 4, 4);
+		// Create Bishop at E5
+		p = new Bishop(true, Tile.E5.getX(), Tile.E5.getY());
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -446,8 +446,8 @@ public class TestQueen {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Queen at 3, 3
-		piece = new Queen(true, 3, 3);
+		// Create Queen at D4
+		piece = new Queen(true, Tile.D4.getX(), Tile.D4.getY());
 		// Expected Moves
 		tileExpectedMoves.add(Tile.E3);
 		tileExpectedMoves.add(Tile.F2);
@@ -456,32 +456,32 @@ public class TestQueen {
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Rook at 4, 3
-		AbstractPiece p = new Rook(true, 4, 3);
+		// Create Rook at D5
+		AbstractPiece p = new Rook(true, Tile.D5.getX(), Tile.D5.getY());
 		board.setCustomPiece(p);
 
-		// Create Rook at 2, 3
-		p = new Rook(true, 2, 3);
+		// Create Rook at D3
+		p = new Rook(true, Tile.D3.getX(), Tile.D3.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 2
-		p = new Knight(true, 3, 2);
+		// Create Knight at C4
+		p = new Knight(true, Tile.C4.getX(), Tile.C4.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 4
-		p = new Knight(true, 3, 4);
+		// Create Knight at E4
+		p = new Knight(true, Tile.E4.getX(), Tile.E4.getY());
 		board.setCustomPiece(p);
 
-		// Create Bishop at 4, 2
-		p = new Bishop(true, 4, 2);
+		// Create Bishop at C5
+		p = new Bishop(true, Tile.C5.getX(), Tile.C5.getY());
 		board.setCustomPiece(p);
 
-		// Create Bishop at 4, 4
-		p = new Bishop(true, 4, 4);
+		// Create Bishop at E5
+		p = new Bishop(true, Tile.E5.getX(), Tile.E5.getY());
 		board.setCustomPiece(p);
 
-		// Create Pawn at 2, 2
-		p = new Pawn(true, 2, 2);
+		// Create Pawn at C3
+		p = new Pawn(true, Tile.C3.getX(), Tile.C3.getY());
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -496,43 +496,43 @@ public class TestQueen {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Queen at 3, 3
-		piece = new Queen(true, 3, 3);
+		// Create Queen at D4
+		piece = new Queen(true, Tile.D4.getX(), Tile.D4.getY());
 		// Expected Moves
 
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Rook at 4, 3
-		AbstractPiece p = new Rook(true, 4, 3);
+		// Create Rook at D5
+		AbstractPiece p = new Rook(true, Tile.D5.getX(), Tile.D5.getY());
 		board.setCustomPiece(p);
 
-		// Create Rook at 2, 3
-		p = new Rook(true, 2, 3);
+		// Create Rook at D3
+		p = new Rook(true, Tile.D3.getX(), Tile.D3.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 2
-		p = new Knight(true, 3, 2);
+		// Create Knight at C4
+		p = new Knight(true, Tile.C4.getX(), Tile.C4.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 4
-		p = new Knight(true, 3, 4);
+		// Create Knight at E4
+		p = new Knight(true, Tile.E4.getX(), Tile.E4.getY());
 		board.setCustomPiece(p);
 
-		// Create Bishop at 4, 2
-		p = new Bishop(true, 4, 2);
+		// Create Bishop at C5
+		p = new Bishop(true, Tile.C5.getX(), Tile.C5.getY());
 		board.setCustomPiece(p);
 
-		// Create Bishop at 4, 4
-		p = new Bishop(true, 4, 4);
+		// Create Bishop at E5
+		p = new Bishop(true, Tile.E5.getX(), Tile.E5.getY());
 		board.setCustomPiece(p);
 
-		// Create Pawn at 2, 2
-		p = new Pawn(true, 2, 2);
+		// Create Pawn at C3
+		p = new Pawn(true, Tile.C3.getX(), Tile.C3.getY());
 		board.setCustomPiece(p);
 
-		// Create Pawn at 2, 4
-		p = new Pawn(true, 2, 4);
+		// Create Pawn at E3
+		p = new Pawn(true, Tile.E3.getX(), Tile.E3.getY());
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -548,20 +548,20 @@ public class TestQueen {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Queen at 3, 3
-		piece = new Queen(true, 3, 3);
+		// Create Queen at D4
+		piece = new Queen(true, Tile.D4.getX(), Tile.D4.getY());
 		// Expected Moves
-		tileExpectedMoves.add(Tile.D3);
-		tileExpectedMoves.add(Tile.D2);
-		tileExpectedMoves.add(Tile.D1);
-		tileExpectedMoves.add(Tile.D5);
-		tileExpectedMoves.add(Tile.C4);
-		tileExpectedMoves.add(Tile.B4);
-		tileExpectedMoves.add(Tile.A4);
 		tileExpectedMoves.add(Tile.E4);
 		tileExpectedMoves.add(Tile.F4);
 		tileExpectedMoves.add(Tile.G4);
 		tileExpectedMoves.add(Tile.H4);
+		tileExpectedMoves.add(Tile.C4);
+		tileExpectedMoves.add(Tile.B4);
+		tileExpectedMoves.add(Tile.A4);
+		tileExpectedMoves.add(Tile.D5);
+		tileExpectedMoves.add(Tile.D3);
+		tileExpectedMoves.add(Tile.D2);
+		tileExpectedMoves.add(Tile.D1);
 		tileExpectedMoves.add(Tile.C5);
 		tileExpectedMoves.add(Tile.B6);
 		tileExpectedMoves.add(Tile.A7);
@@ -579,8 +579,8 @@ public class TestQueen {
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Rook at 4, 3
-		AbstractPiece p = new Rook(false, 4, 3);
+		// Create Rook at D5
+		AbstractPiece p = new Rook(false, Tile.D5.getX(), Tile.D5.getY());
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -595,18 +595,18 @@ public class TestQueen {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Queen at 3, 3
-		piece = new Queen(true, 3, 3);
+		// Create Queen at D4
+		piece = new Queen(true, Tile.D4.getX(), Tile.D4.getY());
 		// Expected Moves
-		tileExpectedMoves.add(Tile.D3);
-		tileExpectedMoves.add(Tile.D5);
-		tileExpectedMoves.add(Tile.C4);
-		tileExpectedMoves.add(Tile.B4);
-		tileExpectedMoves.add(Tile.A4);
 		tileExpectedMoves.add(Tile.E4);
 		tileExpectedMoves.add(Tile.F4);
 		tileExpectedMoves.add(Tile.G4);
 		tileExpectedMoves.add(Tile.H4);
+		tileExpectedMoves.add(Tile.C4);
+		tileExpectedMoves.add(Tile.B4);
+		tileExpectedMoves.add(Tile.A4);
+		tileExpectedMoves.add(Tile.D5);
+		tileExpectedMoves.add(Tile.D3);
 		tileExpectedMoves.add(Tile.C5);
 		tileExpectedMoves.add(Tile.B6);
 		tileExpectedMoves.add(Tile.A7);
@@ -624,12 +624,12 @@ public class TestQueen {
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Rook at 4, 3
-		AbstractPiece p = new Rook(false, 4, 3);
+		// Create Rook at D5
+		AbstractPiece p = new Rook(false, Tile.D5.getX(), Tile.D5.getY());
 		board.setCustomPiece(p);
 
-		// Create Rook at 2, 3
-		p = new Rook(false, 2, 3);
+		// Create Rook at D3
+		p = new Rook(false, Tile.D3.getX(), Tile.D3.getY());
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -644,16 +644,16 @@ public class TestQueen {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Queen at 3, 3
-		piece = new Queen(true, 3, 3);
+		// Create Queen at D4
+		piece = new Queen(true, Tile.D4.getX(), Tile.D4.getY());
 		// Expected Moves
-		tileExpectedMoves.add(Tile.D3);
-		tileExpectedMoves.add(Tile.D5);
-		tileExpectedMoves.add(Tile.C4);
 		tileExpectedMoves.add(Tile.E4);
 		tileExpectedMoves.add(Tile.F4);
 		tileExpectedMoves.add(Tile.G4);
 		tileExpectedMoves.add(Tile.H4);
+		tileExpectedMoves.add(Tile.C4);
+		tileExpectedMoves.add(Tile.D5);
+		tileExpectedMoves.add(Tile.D3);
 		tileExpectedMoves.add(Tile.C5);
 		tileExpectedMoves.add(Tile.B6);
 		tileExpectedMoves.add(Tile.A7);
@@ -671,16 +671,16 @@ public class TestQueen {
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Rook at 4, 3
-		AbstractPiece p = new Rook(false, 4, 3);
+		// Create Rook at D5
+		AbstractPiece p = new Rook(false, Tile.D5.getX(), Tile.D5.getY());
 		board.setCustomPiece(p);
 
-		// Create Rook at 2, 3
-		p = new Rook(false, 2, 3);
+		// Create Rook at D3
+		p = new Rook(false, Tile.D3.getX(), Tile.D3.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 2
-		p = new Knight(false, 3, 2);
+		// Create Knight at C4
+		p = new Knight(false, Tile.C4.getX(), Tile.C4.getY());
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -695,13 +695,13 @@ public class TestQueen {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Queen at 3, 3
-		piece = new Queen(true, 3, 3);
+		// Create Queen at D4
+		piece = new Queen(true, Tile.D4.getX(), Tile.D4.getY());
 		// Expected Moves
-		tileExpectedMoves.add(Tile.D3);
-		tileExpectedMoves.add(Tile.D5);
-		tileExpectedMoves.add(Tile.C4);
 		tileExpectedMoves.add(Tile.E4);
+		tileExpectedMoves.add(Tile.C4);
+		tileExpectedMoves.add(Tile.D5);
+		tileExpectedMoves.add(Tile.D3);
 		tileExpectedMoves.add(Tile.C5);
 		tileExpectedMoves.add(Tile.B6);
 		tileExpectedMoves.add(Tile.A7);
@@ -719,20 +719,20 @@ public class TestQueen {
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Rook at 4, 3
-		AbstractPiece p = new Rook(false, 4, 3);
+		// Create Rook at D5
+		AbstractPiece p = new Rook(false, Tile.D5.getX(), Tile.D5.getY());
 		board.setCustomPiece(p);
 
-		// Create Rook at 2, 3
-		p = new Rook(false, 2, 3);
+		// Create Rook at D3
+		p = new Rook(false, Tile.D3.getX(), Tile.D3.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 2
-		p = new Knight(false, 3, 2);
+		// Create Knight at C4
+		p = new Knight(false, Tile.C4.getX(), Tile.C4.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 4
-		p = new Knight(false, 3, 4);
+		// Create Knight at E4
+		p = new Knight(false, Tile.E4.getX(), Tile.E4.getY());
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -747,13 +747,13 @@ public class TestQueen {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Queen at 3, 3
-		piece = new Queen(true, 3, 3);
+		// Create Queen at D4
+		piece = new Queen(true, Tile.D4.getX(), Tile.D4.getY());
 		// Expected Moves
-		tileExpectedMoves.add(Tile.D3);
-		tileExpectedMoves.add(Tile.D5);
-		tileExpectedMoves.add(Tile.C4);
 		tileExpectedMoves.add(Tile.E4);
+		tileExpectedMoves.add(Tile.C4);
+		tileExpectedMoves.add(Tile.D5);
+		tileExpectedMoves.add(Tile.D3);
 		tileExpectedMoves.add(Tile.C5);
 		tileExpectedMoves.add(Tile.E3);
 		tileExpectedMoves.add(Tile.F2);
@@ -769,24 +769,24 @@ public class TestQueen {
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Rook at 4, 3
-		AbstractPiece p = new Rook(false, 4, 3);
+		// Create Rook at D5
+		AbstractPiece p = new Rook(false, Tile.D5.getX(), Tile.D5.getY());
 		board.setCustomPiece(p);
 
-		// Create Rook at 2, 3
-		p = new Rook(false, 2, 3);
+		// Create Rook at D3
+		p = new Rook(false, Tile.D3.getX(), Tile.D3.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 2
-		p = new Knight(false, 3, 2);
+		// Create Knight at C4
+		p = new Knight(false, Tile.C4.getX(), Tile.C4.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 4
-		p = new Knight(false, 3, 4);
+		// Create Knight at E4
+		p = new Knight(false, Tile.E4.getX(), Tile.E4.getY());
 		board.setCustomPiece(p);
 
-		// Create Bishop at 4, 2
-		p = new Bishop(false, 4, 2);
+		// Create Bishop at C5
+		p = new Bishop(false, Tile.C5.getX(), Tile.C5.getY());
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -801,13 +801,13 @@ public class TestQueen {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Queen at 3, 3
-		piece = new Queen(true, 3, 3);
+		// Create Queen at D4
+		piece = new Queen(true, Tile.D4.getX(), Tile.D4.getY());
 		// Expected Moves
-		tileExpectedMoves.add(Tile.D3);
-		tileExpectedMoves.add(Tile.D5);
-		tileExpectedMoves.add(Tile.C4);
 		tileExpectedMoves.add(Tile.E4);
+		tileExpectedMoves.add(Tile.C4);
+		tileExpectedMoves.add(Tile.D5);
+		tileExpectedMoves.add(Tile.D3);
 		tileExpectedMoves.add(Tile.C5);
 		tileExpectedMoves.add(Tile.E3);
 		tileExpectedMoves.add(Tile.F2);
@@ -820,28 +820,28 @@ public class TestQueen {
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Rook at 4, 3
-		AbstractPiece p = new Rook(false, 4, 3);
+		// Create Rook at D5
+		AbstractPiece p = new Rook(false, Tile.D5.getX(), Tile.D5.getY());
 		board.setCustomPiece(p);
 
-		// Create Rook at 2, 3
-		p = new Rook(false, 2, 3);
+		// Create Rook at D3
+		p = new Rook(false, Tile.D3.getX(), Tile.D3.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 2
-		p = new Knight(false, 3, 2);
+		// Create Knight at C4
+		p = new Knight(false, Tile.C4.getX(), Tile.C4.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 4
-		p = new Knight(false, 3, 4);
+		// Create Knight at E4
+		p = new Knight(false, Tile.E4.getX(), Tile.E4.getY());
 		board.setCustomPiece(p);
 
-		// Create Bishop at 4, 2
-		p = new Bishop(false, 4, 2);
+		// Create Bishop at C5
+		p = new Bishop(false, Tile.C5.getX(), Tile.C5.getY());
 		board.setCustomPiece(p);
 
-		// Create Bishop at 4, 4
-		p = new Bishop(false, 4, 4);
+		// Create Bishop at E5
+		p = new Bishop(false, Tile.E5.getX(), Tile.E5.getY());
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -856,13 +856,13 @@ public class TestQueen {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Queen at 3, 3
-		piece = new Queen(true, 3, 3);
+		// Create Queen at D4
+		piece = new Queen(true, Tile.D4.getX(), Tile.D4.getY());
 		// Expected Moves
-		tileExpectedMoves.add(Tile.D3);
-		tileExpectedMoves.add(Tile.D5);
-		tileExpectedMoves.add(Tile.C4);
 		tileExpectedMoves.add(Tile.E4);
+		tileExpectedMoves.add(Tile.C4);
+		tileExpectedMoves.add(Tile.D5);
+		tileExpectedMoves.add(Tile.D3);
 		tileExpectedMoves.add(Tile.C5);
 		tileExpectedMoves.add(Tile.E3);
 		tileExpectedMoves.add(Tile.F2);
@@ -873,32 +873,32 @@ public class TestQueen {
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Rook at 4, 3
-		AbstractPiece p = new Rook(false, 4, 3);
+		// Create Rook at D5
+		AbstractPiece p = new Rook(false, Tile.D5.getX(), Tile.D5.getY());
 		board.setCustomPiece(p);
 
-		// Create Rook at 2, 3
-		p = new Rook(false, 2, 3);
+		// Create Rook at D3
+		p = new Rook(false, Tile.D3.getX(), Tile.D3.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 2
-		p = new Knight(false, 3, 2);
+		// Create Knight at C4
+		p = new Knight(false, Tile.C4.getX(), Tile.C4.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 4
-		p = new Knight(false, 3, 4);
+		// Create Knight at E4
+		p = new Knight(false, Tile.E4.getX(), Tile.E4.getY());
 		board.setCustomPiece(p);
 
-		// Create Bishop at 4, 2
-		p = new Bishop(false, 4, 2);
+		// Create Bishop at C5
+		p = new Bishop(false, Tile.C5.getX(), Tile.C5.getY());
 		board.setCustomPiece(p);
 
-		// Create Bishop at 4, 4
-		p = new Bishop(false, 4, 4);
+		// Create Bishop at E5
+		p = new Bishop(false, Tile.E5.getX(), Tile.E5.getY());
 		board.setCustomPiece(p);
 
-		// Create Pawn at 2, 2
-		p = new Pawn(false, 2, 2);
+		// Create Pawn at C3
+		p = new Pawn(false, Tile.C3.getX(), Tile.C3.getY());
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -913,13 +913,13 @@ public class TestQueen {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Queen at 3, 3
-		piece = new Queen(true, 3, 3);
+		// Create Queen at D4
+		piece = new Queen(true, Tile.D4.getX(), Tile.D4.getY());
 		// Expected Moves
-		tileExpectedMoves.add(Tile.D3);
-		tileExpectedMoves.add(Tile.D5);
-		tileExpectedMoves.add(Tile.C4);
 		tileExpectedMoves.add(Tile.E4);
+		tileExpectedMoves.add(Tile.C4);
+		tileExpectedMoves.add(Tile.D5);
+		tileExpectedMoves.add(Tile.D3);
 		tileExpectedMoves.add(Tile.C5);
 		tileExpectedMoves.add(Tile.E3);
 		tileExpectedMoves.add(Tile.C3);
@@ -928,36 +928,36 @@ public class TestQueen {
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Rook at 4, 3
-		AbstractPiece p = new Rook(false, 4, 3);
+		// Create Rook at D5
+		AbstractPiece p = new Rook(false, Tile.D5.getX(), Tile.D5.getY());
 		board.setCustomPiece(p);
 
-		// Create Rook at 2, 3
-		p = new Rook(false, 2, 3);
+		// Create Rook at D3
+		p = new Rook(false, Tile.D3.getX(), Tile.D3.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 2
-		p = new Knight(false, 3, 2);
+		// Create Knight at C4
+		p = new Knight(false, Tile.C4.getX(), Tile.C4.getY());
 		board.setCustomPiece(p);
 
-		// Create Knight at 3, 4
-		p = new Knight(false, 3, 4);
+		// Create Knight at E4
+		p = new Knight(false, Tile.E4.getX(), Tile.E4.getY());
 		board.setCustomPiece(p);
 
-		// Create Bishop at 4, 2
-		p = new Bishop(false, 4, 2);
+		// Create Bishop at C5
+		p = new Bishop(false, Tile.C5.getX(), Tile.C5.getY());
 		board.setCustomPiece(p);
 
-		// Create Bishop at 4, 4
-		p = new Bishop(false, 4, 4);
+		// Create Bishop at E5
+		p = new Bishop(false, Tile.E5.getX(), Tile.E5.getY());
 		board.setCustomPiece(p);
 
-		// Create Pawn at 2, 2
-		p = new Pawn(false, 2, 2);
+		// Create Pawn at C3
+		p = new Pawn(false, Tile.C3.getX(), Tile.C3.getY());
 		board.setCustomPiece(p);
 
-		// Create Pawn at 2, 4
-		p = new Pawn(false, 2, 4);
+		// Create Pawn at E3
+		p = new Pawn(false, Tile.E3.getX(), Tile.E3.getY());
 		board.setCustomPiece(p);
 
 		// Assert Moves
