@@ -166,6 +166,7 @@ public class TestRook {
 
 		// Assert Moves
 		moves = piece.getValidMoves(board.getChessBoard());
+		System.out.println(board.printBoard());
 		convertMovesToTiles(moves);
 		assertEquals(tileExpectedMoves, tileActualMoves);
 	}
@@ -192,12 +193,151 @@ public class TestRook {
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create White Rook at 4, 3
+		// Create Rook at 4, 3
 		AbstractPiece p = new Rook(true, 4, 3);
 		board.setCustomPiece(p);
 
 		// Assert Moves
 		moves = piece.getValidMoves(board.getChessBoard());
+		System.out.println(board.printBoard());
+		convertMovesToTiles(moves);
+		assertEquals(tileExpectedMoves, tileActualMoves);
+	}
+
+	@Test
+	public void testCustomWhiteRook_TwoWhitePieces() {
+		// Create Blank Board
+		board = new ChessBoard();
+
+		// Create White Rook at 3, 3
+		piece = new Rook(true, 3, 3);
+		// Expected Moves
+		tileExpectedMoves.add(Tile.D3);
+		tileExpectedMoves.add(Tile.D2);
+		tileExpectedMoves.add(Tile.D1);
+		tileExpectedMoves.add(Tile.E4);
+		tileExpectedMoves.add(Tile.F4);
+		tileExpectedMoves.add(Tile.G4);
+		tileExpectedMoves.add(Tile.H4);
+
+		// Set Custom Rook
+		board.setCustomPiece(piece);
+
+		// Create Rook at 4, 3
+		AbstractPiece p = new Rook(true, 4, 3);
+		board.setCustomPiece(p);
+
+		// Create Knight at 3, 2
+		p = new Knight(true, 3, 2);
+		board.setCustomPiece(p);
+
+		// Assert Moves
+		moves = piece.getValidMoves(board.getChessBoard());
+		System.out.println(board.printBoard());
+		convertMovesToTiles(moves);
+		assertEquals(tileExpectedMoves, tileActualMoves);
+	}
+
+	@Test
+	public void testCustomWhiteRook_ThreeWhitePieces() {
+		// Create Blank Board
+		board = new ChessBoard();
+
+		// Create White Rook at 3, 3
+		piece = new Rook(true, 3, 3);
+		// Expected Moves
+		tileExpectedMoves.add(Tile.D3);
+		tileExpectedMoves.add(Tile.D2);
+		tileExpectedMoves.add(Tile.D1);
+
+		// Set Custom Rook
+		board.setCustomPiece(piece);
+
+		// Create Rook at 4, 3
+		AbstractPiece p = new Rook(true, 4, 3);
+		board.setCustomPiece(p);
+
+		// Create Rook at 3, 2
+		p = new Knight(true, 3, 2);
+		board.setCustomPiece(p);
+
+		// Create Knight at 3, 4
+		p = new Knight(true, 3, 4);
+		board.setCustomPiece(p);
+
+		// Assert Moves
+		moves = piece.getValidMoves(board.getChessBoard());
+		System.out.println(board.printBoard());
+		convertMovesToTiles(moves);
+		assertEquals(tileExpectedMoves, tileActualMoves);
+	}
+
+	@Test
+	public void testCustomWhiteRook_FourWhitePieces() {
+		// Create Blank Board
+		board = new ChessBoard();
+
+		// Create White Rook at 3, 3
+		piece = new Rook(true, 3, 3);
+		// Expected Moves
+
+		// Set Custom Rook
+		board.setCustomPiece(piece);
+
+		// Create Rook at 4, 3
+		AbstractPiece p = new Rook(true, 4, 3);
+		board.setCustomPiece(p);
+
+		// Create Rook at 3, 2
+		p = new Rook(true, 3, 2);
+		board.setCustomPiece(p);
+
+		// Create Knight at 3, 4
+		p = new Knight(true, 3, 4);
+		board.setCustomPiece(p);
+
+		// Create Bishop at 2, 3
+		p = new Bishop(true, 2, 3);
+		board.setCustomPiece(p);
+
+		// Assert Moves
+		moves = piece.getValidMoves(board.getChessBoard());
+		System.out.println(board.printBoard());
+		convertMovesToTiles(moves);
+		assertEquals(0, tileActualMoves.size());
+		assertTrue(tileActualMoves.isEmpty());
+	}
+
+	@Test
+	public void testCustomWhiteRook_OneBlackPiece() {
+		// Create Blank Board
+		board = new ChessBoard();
+
+		// Create White Rook at 3, 3
+		piece = new Rook(true, 3, 3);
+		// Expected Moves
+		tileExpectedMoves.add(Tile.D3);
+		tileExpectedMoves.add(Tile.D2);
+		tileExpectedMoves.add(Tile.D1);
+		tileExpectedMoves.add(Tile.D5);
+		tileExpectedMoves.add(Tile.C4);
+		tileExpectedMoves.add(Tile.B4);
+		tileExpectedMoves.add(Tile.A4);
+		tileExpectedMoves.add(Tile.E4);
+		tileExpectedMoves.add(Tile.F4);
+		tileExpectedMoves.add(Tile.G4);
+		tileExpectedMoves.add(Tile.H4);
+
+		// Set Custom Rook
+		board.setCustomPiece(piece);
+
+		// Create White Rook at 4, 3
+		AbstractPiece p = new Rook(false, 4, 3);
+		board.setCustomPiece(p);
+
+		// Assert Moves
+		moves = piece.getValidMoves(board.getChessBoard());
+		System.out.println(board.printBoard());
 		convertMovesToTiles(moves);
 		assertEquals(tileExpectedMoves, tileActualMoves);
 	}
@@ -223,16 +363,17 @@ public class TestRook {
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Black Rook at 4, 3
+		// Create Rook at 4, 3
 		AbstractPiece p = new Rook(false, 4, 3);
 		board.setCustomPiece(p);
 
-		// Create Black Rook at 3, 2
+		// Create Rook at 3, 2
 		p = new Rook(false, 3, 2);
 		board.setCustomPiece(p);
 
 		// Assert Moves
 		moves = piece.getValidMoves(board.getChessBoard());
+		System.out.println(board.printBoard());
 		convertMovesToTiles(moves);
 		assertEquals(tileExpectedMoves, tileActualMoves);
 	}
@@ -255,20 +396,21 @@ public class TestRook {
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Black Rook at 4, 3
+		// Create Rook at 4, 3
 		AbstractPiece p = new Rook(false, 4, 3);
 		board.setCustomPiece(p);
 
-		// Create Black Rook at 3, 2
+		// Create Rook at 3, 2
 		p = new Rook(false, 3, 2);
 		board.setCustomPiece(p);
 
-		// Create Black Knight at 3, 4
+		// Create Knight at 3, 4
 		p = new Knight(false, 3, 4);
 		board.setCustomPiece(p);
 
 		// Assert Moves
 		moves = piece.getValidMoves(board.getChessBoard());
+		System.out.println(board.printBoard());
 		convertMovesToTiles(moves);
 		assertEquals(tileExpectedMoves, tileActualMoves);
 	}
@@ -289,24 +431,25 @@ public class TestRook {
 		// Set Custom Rook
 		board.setCustomPiece(piece);
 
-		// Create Black Rook at 4, 3
+		// Create Rook at 4, 3
 		AbstractPiece p = new Rook(false, 4, 3);
 		board.setCustomPiece(p);
 
-		// Create Black Rook at 3, 2
+		// Create Rook at 3, 2
 		p = new Rook(false, 3, 2);
 		board.setCustomPiece(p);
 
-		// Create Black Knight at 3, 4
+		// Create Knight at 3, 4
 		p = new Knight(false, 3, 4);
 		board.setCustomPiece(p);
 
-		// Create Black Rook at 2, 3
+		// Create Rook at 2, 3
 		p = new Knight(false, 2, 3);
 		board.setCustomPiece(p);
 
 		// Assert Moves
 		moves = piece.getValidMoves(board.getChessBoard());
+		System.out.println(board.printBoard());
 		convertMovesToTiles(moves);
 		assertEquals(tileExpectedMoves, tileActualMoves);
 	}

@@ -143,7 +143,7 @@ public class TestBishop {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Rook at 3, 3
+		// Create White Bishop at 3, 3
 		piece = new Bishop(true, 3, 3);
 		// Expected Moves
 		tileExpectedMoves.add(Tile.C5);
@@ -160,7 +160,7 @@ public class TestBishop {
 		tileExpectedMoves.add(Tile.G7);
 		tileExpectedMoves.add(Tile.H8);
 
-		// Set Custom Rook
+		// Set Custom Bishop
 		board.setCustomPiece(piece);
 
 		// Assert Moves
@@ -175,7 +175,7 @@ public class TestBishop {
 		// Create Blank Board
 		board = new ChessBoard();
 
-		// Create White Rook at 3, 3
+		// Create White Bishop at 3, 3
 		piece = new Bishop(true, 3, 3);
 		// Expected Moves
 		tileExpectedMoves.add(Tile.E3);
@@ -189,11 +189,150 @@ public class TestBishop {
 		tileExpectedMoves.add(Tile.G7);
 		tileExpectedMoves.add(Tile.H8);
 
-		// Set Custom Rook
+		// Set Custom Bishop
 		board.setCustomPiece(piece);
 
 		// Create White Bishop at 4, 2
 		AbstractPiece p = new Bishop(true, 4, 2);
+		board.setCustomPiece(p);
+
+		// Assert Moves
+		moves = piece.getValidMoves(board.getChessBoard());
+		System.out.println(board.printBoard());
+		convertMovesToTiles(moves);
+		assertEquals(tileExpectedMoves, tileActualMoves);
+	}
+
+	@Test
+	public void testCustomWhiteBishop_TwoWhitePieces() {
+		// Create Blank Board
+		board = new ChessBoard();
+
+		// Create White Bishop at 3, 3
+		piece = new Bishop(true, 3, 3);
+		// Expected Moves
+		tileExpectedMoves.add(Tile.C3);
+		tileExpectedMoves.add(Tile.B2);
+		tileExpectedMoves.add(Tile.A1);
+		tileExpectedMoves.add(Tile.E5);
+		tileExpectedMoves.add(Tile.F6);
+		tileExpectedMoves.add(Tile.G7);
+		tileExpectedMoves.add(Tile.H8);
+
+		// Set Custom Bishop
+		board.setCustomPiece(piece);
+
+		// Create Bishop at 4, 2
+		AbstractPiece p = new Bishop(true, 4, 2);
+		board.setCustomPiece(p);
+
+		// Create Rook at 2, 4
+		p = new Rook(true, 2, 4);
+		board.setCustomPiece(p);
+
+		// Assert Moves
+		moves = piece.getValidMoves(board.getChessBoard());
+		System.out.println(board.printBoard());
+		convertMovesToTiles(moves);
+		assertEquals(tileExpectedMoves, tileActualMoves);
+	}
+
+	@Test
+	public void testCustomWhiteBishop_ThreeWhitePieces() {
+		// Create Blank Board
+		board = new ChessBoard();
+
+		// Create White Bishop at 3, 3
+		piece = new Bishop(true, 3, 3);
+		// Expected Moves
+		tileExpectedMoves.add(Tile.E5);
+		tileExpectedMoves.add(Tile.F6);
+		tileExpectedMoves.add(Tile.G7);
+		tileExpectedMoves.add(Tile.H8);
+
+		// Set Custom Bishop
+		board.setCustomPiece(piece);
+
+		// Create Bishop at 4, 2
+		AbstractPiece p = new Bishop(true, 4, 2);
+		board.setCustomPiece(p);
+
+		// Create Rook at 2, 4
+		p = new Rook(true, 2, 4);
+		board.setCustomPiece(p);
+
+		// Create Knight at 2, 2
+		p = new Rook(true, 2, 2);
+		board.setCustomPiece(p);
+
+		// Assert Moves
+		moves = piece.getValidMoves(board.getChessBoard());
+		System.out.println(board.printBoard());
+		convertMovesToTiles(moves);
+		assertEquals(tileExpectedMoves, tileActualMoves);
+	}
+
+	@Test
+	public void testCustomWhiteBishop_FourWhitePieces() {
+		// Create Blank Board
+		board = new ChessBoard();
+
+		// Create White Rook at 3, 3
+		piece = new Bishop(true, 3, 3);
+		// Expected Moves
+
+		// Set Custom Bishop
+		board.setCustomPiece(piece);
+
+		// Create Bishop at 4, 2
+		AbstractPiece p = new Bishop(true, 4, 2);
+		board.setCustomPiece(p);
+
+		// Create Rook at 2, 4
+		p = new Rook(true, 2, 4);
+		board.setCustomPiece(p);
+
+		// Create Rook at 2, 2
+		p = new Rook(true, 2, 2);
+		board.setCustomPiece(p);
+
+		// Create Knight at 4, 4
+		p = new Knight(true, 4, 4);
+		board.setCustomPiece(p);
+
+		// Assert Moves
+		moves = piece.getValidMoves(board.getChessBoard());
+		System.out.println(board.printBoard());
+		convertMovesToTiles(moves);
+		assertEquals(0, tileActualMoves.size());
+		assertTrue(tileActualMoves.isEmpty());
+	}
+
+	@Test
+	public void testCustomWhiteBishop_OneBlackPiece() {
+		// Create Blank Board
+		board = new ChessBoard();
+
+		// Create White Rook at 3, 3
+		piece = new Bishop(true, 3, 3);
+		// Expected Moves
+		tileExpectedMoves.add(Tile.C5);
+		tileExpectedMoves.add(Tile.E3);
+		tileExpectedMoves.add(Tile.F2);
+		tileExpectedMoves.add(Tile.G1);
+		tileExpectedMoves.add(Tile.C3);
+		tileExpectedMoves.add(Tile.B2);
+		tileExpectedMoves.add(Tile.A1);
+		tileExpectedMoves.add(Tile.E5);
+		tileExpectedMoves.add(Tile.F6);
+		tileExpectedMoves.add(Tile.G7);
+		tileExpectedMoves.add(Tile.H8);
+
+		// Set Custom Bishop
+		board.setCustomPiece(piece);
+
+		// Create Bishop at 4, 2
+		AbstractPiece p = new Bishop(false, 4, 2);
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -221,14 +360,14 @@ public class TestBishop {
 		tileExpectedMoves.add(Tile.G7);
 		tileExpectedMoves.add(Tile.H8);
 
-		// Set Custom Rook
+		// Set Custom Bishop
 		board.setCustomPiece(piece);
 
-		// Create Black Bishop at 4, 2
+		// Create Bishop at 4, 2
 		AbstractPiece p = new Bishop(false, 4, 2);
 		board.setCustomPiece(p);
 
-		// Create Black Bishop at 2, 4
+		// Create Bishop at 2, 4
 		p = new Bishop(false, 2, 4);
 		board.setCustomPiece(p);
 
@@ -255,19 +394,19 @@ public class TestBishop {
 		tileExpectedMoves.add(Tile.G7);
 		tileExpectedMoves.add(Tile.H8);
 
-		// Set Custom Rook
+		// Set Custom Bishop
 		board.setCustomPiece(piece);
 
-		// Create Black Bishop at 4, 2
+		// Create Bishop at 4, 2
 		AbstractPiece p = new Bishop(false, 4, 2);
 		board.setCustomPiece(p);
 
-		// Create Black Bishop at 2, 4
+		// Create Bishop at 2, 4
 		p = new Bishop(false, 2, 4);
 		board.setCustomPiece(p);
 
-		// Create Black Knight at 2, 2
-		p = new Knight(false, 2, 2);
+		// Create Rook at 2, 2
+		p = new Rook(false, 2, 2);
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -290,23 +429,23 @@ public class TestBishop {
 		tileExpectedMoves.add(Tile.C3);
 		tileExpectedMoves.add(Tile.E5);
 
-		// Set Custom Rook
+		// Set Custom Bishop
 		board.setCustomPiece(piece);
 
-		// Create Black Bishop at 4, 2
+		// Create Bishop at 4, 2
 		AbstractPiece p = new Bishop(false, 4, 2);
 		board.setCustomPiece(p);
 
-		// Create Black Bishop at 2, 4
+		// Create Bishop at 2, 4
 		p = new Bishop(false, 2, 4);
 		board.setCustomPiece(p);
 
-		// Create Black Knight at 2, 2
-		p = new Knight(false, 2, 2);
+		// Create Rook at 2, 2
+		p = new Rook(false, 2, 2);
 		board.setCustomPiece(p);
 
-		// Create Black Knight at 4, 4
-		p = new Knight(false, 4, 4);
+		// Create Rook at 4, 4
+		p = new Rook(false, 4, 4);
 		board.setCustomPiece(p);
 
 		// Assert Moves
@@ -315,5 +454,4 @@ public class TestBishop {
 		convertMovesToTiles(moves);
 		assertEquals(tileExpectedMoves, tileActualMoves);
 	}
-
 }
