@@ -12,13 +12,73 @@ public class King extends AbstractPiece {
 
 	@Override
 	public List<Cell> getValidMoves(Cell[][] board) {
-		// TODO Auto-generated method stub
-		return null;
+		/**
+		 * King Logic per Wikipedia:
+		 * 
+		 * A king moves one square in any direction. Once in every game, each king can
+		 * make a special move, known as castling. Castling consists of moving the king
+		 * two squares along the first rank toward a rook on the player's first rank,
+		 * and then placing the rook on the last square that the king crossed. Castling
+		 * is permissible if the following three conditions are met: 1. neither the king
+		 * nor the rook has previously moved during the game 2. there are no pieces
+		 * between the king and the rook 3. the king is not in check, and will not pass
+		 * through or land on any square attacked by an enemy piece. (Note that castling
+		 * is permitted if the rook is under attack, or if the rook crosses an attacked
+		 * square.)
+		 */
+		
+		validMoves.clear();
+		
+		// Step 1. Create Array of X-Position Moves with the understanding that 
+		// we can have max 8 valid moves.
+		int xPositions[] = {
+				getX(),
+				getX(),
+				getX() + 1,
+				getX() + 1,
+				getX() + 1,
+				getX() - 1,
+				getX() - 1,
+				getX() - 1
+		};
+		
+		// Step 2. Create Array of Y-Position Moves with the understanding that
+		// we can have max 8 valid moves.
+		int yPositions[] = {
+				getY() - 1,
+				getY() + 1,
+				getY() - 1,
+				getY(),
+				getY() + 1,
+				getY() - 1,
+				getY(),
+				getY() + 1
+		};
+		
+
+		// Step 3. Iterate Each Position
+		for (int i = 0; i < 8; i++) {
+			int xP = xPositions[i];
+			int yP = yPositions[i];
+
+			// Step 4. Verify that we are still on the board
+			if ((xP >= 0 && xP < 8) && (yP >= 0 && yP < 8)) {
+				Cell c = board[xP][yP];
+				AbstractPiece p = c.getPiece();
+
+				// Step 5. If there is no piece at the cell or the piece is not equal to the
+				// same color, add the cell as a valid move
+				if (null == p || this.isWhite() != p.isWhite()) {
+					validMoves.add(c);
+				}
+			}
+		}
+	
+		return validMoves;
 	}
 
 	@Override
 	public PieceEnum getPieceEnum() {
 		return PieceEnum.KING;
 	}
-
 }
