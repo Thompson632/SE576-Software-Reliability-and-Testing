@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.thompson.apps.chess.board.Cell;
+import com.thompson.apps.chess.board.Tile;
 
 public abstract class AbstractPiece {
 	/* Initial X Location - Not on Board */
@@ -454,6 +455,20 @@ public abstract class AbstractPiece {
 	public abstract PieceEnum getPieceEnum();
 	
 	/**
+	 * FUNCTION_ABTRACT: toString
+	 * 
+	 * PURPOSE: Returns the String representation of the piece with its location of
+	 * x, y.
+	 * 
+	 * @return String
+	 * 
+	 *         END FUNCTION_ABSTRACT
+	 */
+	public String toString() {
+		return getPieceEnum().toString() + " " + Tile.getTileAtPosition(getX(), getY()); 
+	}
+	
+	/**
 	 * FUNCTION_ABSTRACT: toString
 	 * 
 	 * PURPOSE: Returns the String representation of the piece.
@@ -463,8 +478,7 @@ public abstract class AbstractPiece {
 	 * 
 	 * @return String
 	 */
-	@Override
-	public String toString() {
+	public String getShortName() {
 		return isWhite() ? getPieceEnum().getName() : getPieceEnum().getName().toLowerCase();
 	}
 	
@@ -494,5 +508,39 @@ public abstract class AbstractPiece {
 	 */
 	public int getY() {
 		return y;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (isWhite ? 1231 : 1237);
+		result = prime * result + ((validMoves == null) ? 0 : validMoves.hashCode());
+		result = prime * result + x;
+		result = prime * result + y;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractPiece other = (AbstractPiece) obj;
+		if (isWhite != other.isWhite)
+			return false;
+		if (validMoves == null) {
+			if (other.validMoves != null)
+				return false;
+		} else if (!validMoves.equals(other.validMoves))
+			return false;
+		if (x != other.x)
+			return false;
+		if (y != other.y)
+			return false;
+		return true;
 	}
 }

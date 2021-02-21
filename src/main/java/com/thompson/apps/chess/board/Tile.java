@@ -132,4 +132,28 @@ public enum Tile {
 	public String getName() {
 		return name;
 	}
+	
+	/**
+	 * FUNCTION_ABSTRACT: getTileAtPosition
+	 * 
+	 * PURPOSE: Returns the String representation of a tile at given X, Y Position
+	 * 
+	 * NOTE: This is used as a utility function instead of converting column
+	 * characters to integer values
+	 * 
+	 * @param int x - X Position
+	 * @param int y - Y Position
+	 * @return String Name of Tile
+	 * 
+	 *         END FUNCTION_ABSTRACT
+	 */
+	public static String getTileAtPosition(int x, int y) {
+		for (Tile t : Tile.values()) {
+			if ((t.getX() == x) && (t.getY() == y)) {
+				return t.getName();
+			}
+		}
+
+		return null;
+	}
 }

@@ -112,7 +112,7 @@ public class ChessBoard {
 		for (int i = board.length - 1; i >= 0; i--) {
 			for (int j = 0; j < board[i].length; j++) {
 				if (board[i][j].getPiece() != null) {
-					stringBuilder.append(board[i][j].getPiece().toString());
+					stringBuilder.append(board[i][j].getPiece().getShortName());
 				} else {
 					stringBuilder.append(" ");
 				}
