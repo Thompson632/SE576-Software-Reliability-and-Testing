@@ -673,11 +673,6 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		Main m = new Main();
-
-		try {
-			m.start();
-		} catch (Exception e) {
-			e.printStackTrace(System.err);
-		}
+		m.start();
 	}
 }

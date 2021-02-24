@@ -465,6 +465,29 @@ public class TestPawn {
 		assertEquals(0, tileActualMoves.size());
 		assertTrue(tileActualMoves.isEmpty());
 	}
+	
+	@Test
+	public void testCustomWhitePawn_BlackPieceTwoSpacesInFront() {
+		// Create Blank Board
+		board = new ChessBoard();
+
+		// Create White Pawn at D2
+		piece = new Pawn(true, Tile.D2.getX(), Tile.D2.getY());
+		// Expected Moves
+		tileExpectedMoves.add(Tile.D3);
+
+		// Set Custom Pawn
+		board.setCustomPiece(piece);
+
+		// Create Black Pawn at D4
+		AbstractPiece p = new Pawn(false, Tile.D4.getX(), Tile.D4.getY());
+		board.setCustomPiece(p);
+
+		// Assert Moves
+		moves = piece.getValidMoves(board.getChessBoard());
+		System.out.println(board.printBoard());
+		convertMovesToTiles(moves);
+	}
 
 	@Test
 	public void testCustomWhitePawn_WhitePieceToLeftAndRight() {
@@ -566,6 +589,29 @@ public class TestPawn {
 		convertMovesToTiles(moves);
 		assertEquals(0, tileActualMoves.size());
 		assertTrue(tileActualMoves.isEmpty());
+	}
+	
+	@Test
+	public void testCustomBlackPawn_WhitePieceTwoSpacesInFront() {
+		// Create Blank Board
+		board = new ChessBoard();
+
+		// Create Black Pawn at D7
+		piece = new Pawn(false, Tile.D7.getX(), Tile.D7.getY());
+		// Expected Moves
+		tileExpectedMoves.add(Tile.D6);
+
+		// Set Custom Pawn
+		board.setCustomPiece(piece);
+
+		// Create Pawn at D5
+		AbstractPiece p = new Pawn(true, Tile.D5.getX(), Tile.D5.getY());
+		board.setCustomPiece(p);
+
+		// Assert Moves
+		moves = piece.getValidMoves(board.getChessBoard());
+		System.out.println(board.printBoard());
+		convertMovesToTiles(moves);
 	}
 
 	@Test

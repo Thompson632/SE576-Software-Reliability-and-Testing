@@ -532,11 +532,6 @@ public abstract class AbstractPiece {
 		AbstractPiece other = (AbstractPiece) obj;
 		if (isWhite != other.isWhite)
 			return false;
-		if (validMoves == null) {
-			if (other.validMoves != null)
-				return false;
-		} else if (!validMoves.equals(other.validMoves))
-			return false;
 		if (x != other.x)
 			return false;
 		if (y != other.y)
