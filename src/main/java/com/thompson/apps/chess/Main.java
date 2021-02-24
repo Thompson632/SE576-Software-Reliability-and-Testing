@@ -203,44 +203,6 @@ public class Main {
 	}
 
 	/**
-	 * FUNCTION_ABSTRACT: printMoves
-	 * 
-	 * PURPOSE: Prints the valid moves for the piece in human-readable format to
-	 * align with an actual chess board piece designation
-	 * 
-	 * @param List<Cell> validMoves - List of Valid Moves
-	 * 
-	 *                   END FUNCTION_ABSTRACT
-	 */
-	private void printMoves(List<Cell> validMoves) {
-		boolean hasMoves = true;
-		List<Tile> moves = new ArrayList<Tile>();
-
-		String color = (piece.isWhite() ? "WHITE" : "BLACK");
-		System.out.println("LEGAL MOVES FOR " + color + " " + piece.toString() + ":");
-
-		if (null == validMoves || validMoves.isEmpty()) {
-			System.out.println("No legal moves!");
-			hasMoves = false;
-		} else {
-			for (Cell c : validMoves) {
-				for (Tile s : Tile.values()) {
-					if ((s.getX() == c.getX()) && (s.getY() == c.getY())) {
-						moves.add(s);
-					}
-				}
-			}
-		}
-
-		// Only print moves if they are available
-		if (hasMoves) {
-			System.out.println(moves);
-		}
-
-		System.out.println();
-	}
-
-	/**
 	 * FUNCTION_ABSTRACT: testDefaultWhitePieces
 	 * 
 	 * PURPOSE: Validates each white piece's move by calling the abstract
@@ -455,7 +417,7 @@ public class Main {
 	 * 
 	 *                   END FUNCTION_ABSTRACT
 	 */
-	private void setLocalPieces(String pieces, boolean isWhite) throws Exception {
+	protected void setLocalPieces(String pieces, boolean isWhite) throws Exception {
 		// Step 1. Check to see if pieces is null or is equal to an empty string
 		if (null != pieces && !pieces.equals("")) {
 			// Step 2. Convert comma-separated String to List of String
@@ -474,6 +436,9 @@ public class Main {
 					} else {
 						blackPieces.add(p);
 					}
+				} else {
+					String message = "Piece " + s + " was unable to be converted to a Chess Piece. Invalid entry!\n";
+					throw new Exception(message);
 				}
 			}
 
@@ -503,48 +468,33 @@ public class Main {
 	 * 
 	 *                   END FUNCTION_ABSTRACT
 	 */
-	private void getPieceToMove(String pieceString) throws Exception {
+	protected void getPieceToMove(String pieceString) throws Exception {
 		// Step 1. Check to see if pieces is null or is equal to an empty string
 		if (null != pieceString && !pieceString.equals("")) {
-			boolean isFound = false;
+			// Step 2. Create two temp white and black pieces based on the pieceString
+			AbstractPiece wp = convertStringToPiece(pieceString, true);
+			AbstractPiece bp = convertStringToPiece(pieceString, false);
 
-			// Step 2. Get White Piece
-			this.piece = convertStringToPiece(pieceString, true);
-
-			// Step 3. If the Piece is not null, check to see if the list of white pieces
-			// contains the piece to be validated.
-			if (null != piece) {
-				// Step 4. If the List of White Pieces contains the piece, return
-				if (whitePieces.contains(piece)) {
-					isFound = true;
+			// Step 3. If the temporary white and black piece are both not null,
+			// check to see if the local lists contain the temporary pieces. Otherwise,
+			// throw an exception if they are null or if the lists do not contain
+			// the temporary values
+			if (null != wp && null != bp) {
+				if (whitePieces.contains(wp)) {
+					this.piece = wp;
 					return;
-				}
-			}
-
-			// Step 4/5. If the piece has not been found, check List of Black Pieces
-			if (!isFound) {
-				// Step 5/6. Get Black Piece
-				this.piece = convertStringToPiece(pieceString, false);
-
-				// Step 6/7. If the Piece is not null, check to see if the List of Black Pieces
-				// contains the piece to be validated.
-				if (null != piece) {
-					// Step 7/8. If the List of Black Pieces contains the piece, return
-					if (blackPieces.contains(piece)) {
-						isFound = true;
-						return;
-					} else {
-						String message = "Piece " + piece.toString()
-								+ " is not found in either the White or Black List of Pieces!\n";
-						throw new Exception(message);
-					}
-				}
-				// Step 6/7. If the Piece is null, there is no piece to be validated
-				else {
-					String message = "Piece " + pieceString
+				} else if (blackPieces.contains(bp)) {
+					this.piece = bp;
+					return;
+				} else {
+					String message = "Piece " + wp.toString()
 							+ " is not found in either the White or Black List of Pieces!\n";
 					throw new Exception(message);
 				}
+			} else {
+				String message = "Piece " + pieceString
+						+ " was unable to be converted to a Chess Piece. Invalid entry!";
+				throw new Exception(message);
 			}
 		}
 		// Step 2. If the pieces parameter is null or an empty string, throw an
@@ -568,41 +518,84 @@ public class Main {
 	 * 
 	 *         END FUNCTION_ABSTRACT
 	 */
-	private AbstractPiece convertStringToPiece(String piece, boolean isWhite) {
+	protected AbstractPiece convertStringToPiece(String piece, boolean isWhite) {
 		AbstractPiece p = null;
 
-		// Step 1. Get First Letter of Piece (Ex. Ra1 - would return R)
-		String pieceString = piece.substring(0, 1).toUpperCase();
-		int row = 0;
-		int column = 0;
+		// Step 1. Check to see if the String is of length 3
+		// to ensure we have the combination of a Piece and a tile
+		// where it is placed
+		if (piece.length() == 3) {
+			// Step 2. Get First Letter of Piece (Ex. Ra1 - would return R)
+			String pieceString = piece.substring(0, 1).toUpperCase();
+			int row = 0;
+			int column = 0;
 
-		// Step 2. Get Tile Location
-		String tileString = piece.substring(1).toUpperCase();
-		for (Tile t : Tile.values()) {
-			if (t.getName().equalsIgnoreCase(tileString)) {
-				row = t.getX();
-				column = t.getY();
-				break;
+			// Step 3. Get Tile Location
+			String tileString = piece.substring(1).toUpperCase();
+			for (Tile t : Tile.values()) {
+				if (t.getName().equalsIgnoreCase(tileString)) {
+					row = t.getX();
+					column = t.getY();
+					break;
+				}
+			}
+
+			// Step 4. Create Piece Based on First Letter of String
+			if (pieceString.equals("K")) {
+				p = new King(isWhite, row, column);
+			} else if (pieceString.equals("Q")) {
+				p = new Queen(isWhite, row, column);
+			} else if (pieceString.equals("R")) {
+				p = new Rook(isWhite, row, column);
+			} else if (pieceString.equals("B")) {
+				p = new Bishop(isWhite, row, column);
+			} else if (pieceString.equals("N")) {
+				p = new Knight(isWhite, row, column);
+			} else if (pieceString.equals("P")) {
+				p = new Pawn(isWhite, row, column);
 			}
 		}
 
-		// Step 3. Create Piece Based on First Letter of String
-		if (pieceString.equals("K")) {
-			p = new King(isWhite, row, column);
-		} else if (pieceString.equals("Q")) {
-			p = new Queen(isWhite, row, column);
-		} else if (pieceString.equals("R")) {
-			p = new Rook(isWhite, row, column);
-		} else if (pieceString.equals("B")) {
-			p = new Bishop(isWhite, row, column);
-		} else if (pieceString.equals("N")) {
-			p = new Knight(isWhite, row, column);
-		} else if (pieceString.equals("P")) {
-			p = new Pawn(isWhite, row, column);
+		// Step 2/4. Returns Valid Piece or Null
+		return p;
+	}
+
+	/**
+	 * FUNCTION_ABSTRACT: printMoves
+	 * 
+	 * PURPOSE: Prints the valid moves for the piece in human-readable format to
+	 * align with an actual chess board piece designation
+	 * 
+	 * @param List<Cell> validMoves - List of Valid Moves
+	 * 
+	 *                   END FUNCTION_ABSTRACT
+	 */
+	private void printMoves(List<Cell> validMoves) {
+		boolean hasMoves = true;
+		List<Tile> moves = new ArrayList<Tile>();
+
+		String color = (piece.isWhite() ? "WHITE" : "BLACK");
+		System.out.println("LEGAL MOVES FOR " + color + " " + piece.toString() + ":");
+
+		if (null == validMoves || validMoves.isEmpty()) {
+			System.out.println("No legal moves!");
+			hasMoves = false;
+		} else {
+			for (Cell c : validMoves) {
+				for (Tile s : Tile.values()) {
+					if ((s.getX() == c.getX()) && (s.getY() == c.getY())) {
+						moves.add(s);
+					}
+				}
+			}
 		}
 
-		// Step 3. Returns Valid Piece or Null
-		return p;
+		// Only print moves if they are available
+		if (hasMoves) {
+			System.out.println(moves);
+		}
+
+		System.out.println();
 	}
 
 	/**
@@ -653,13 +646,53 @@ public class Main {
 	 * END FUNCTION_ABSTRACT
 	 */
 	private void reset() {
-		// Step 1. Garbage clean up for the ChessBoard and then new instance for the ChessBoard
+		// Step 1. Garbage clean up for the ChessBoard and then new instance for the
+		// ChessBoard
 		board = null;
 		board = new ChessBoard();
 
 		// Step 2. Clear the White and Black Piece Lists
 		whitePieces.clear();
 		blackPieces.clear();
+	}
+
+	/**
+	 * FUNCTION_ABSTRACT: getWhitePieces
+	 * 
+	 * PURPOSE: Returns the list of white pieces
+	 * 
+	 * @return List<AbstractPiece> - whitePieces
+	 * 
+	 *         END FUNCTION_ABSTRACT
+	 */
+	protected List<AbstractPiece> getWhitePieces() {
+		return whitePieces;
+	}
+
+	/**
+	 * FUNCTION_ABSTRACT: getBlackPieces
+	 * 
+	 * PURPOSE: Returns the list of black pieces
+	 * 
+	 * @return List<AbstractPiece> - blackPieces
+	 * 
+	 *         END FUNCTION_ABSTRACT
+	 */
+	protected List<AbstractPiece> getBlackPieces() {
+		return blackPieces;
+	}
+
+	/**
+	 * FUNCTION_ABSTRACT: getPiece
+	 * 
+	 * PURPOSE: Returns the piece to be validated
+	 * 
+	 * @return AbstractPiece - piece
+	 * 
+	 *         END FUNCTION_ABSTRACT
+	 */
+	protected AbstractPiece getPiece() {
+		return piece;
 	}
 
 	/**
