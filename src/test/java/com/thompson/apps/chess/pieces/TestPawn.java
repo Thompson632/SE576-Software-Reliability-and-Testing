@@ -87,8 +87,8 @@ public class TestPawn {
 		// Assert Color
 		assertTrue(piece.isWhite());
 
-		// Assert toString
-		assertEquals("P", piece.toString());
+		// Assert getShortName
+		assertEquals("P", piece.getShortName());
 
 		// Second Pawn
 		piece = new Pawn(true, Tile.B2.getX(), Tile.B2.getY());
@@ -109,8 +109,8 @@ public class TestPawn {
 		// Assert Color
 		assertTrue(piece.isWhite());
 
-		// Assert toString
-		assertEquals("P", piece.toString());
+		// Assert getShortName
+		assertEquals("P", piece.getShortName());
 
 		// Third Pawn
 		piece = new Pawn(true, Tile.C2.getX(), Tile.C2.getY());
@@ -131,8 +131,8 @@ public class TestPawn {
 		// Assert Color
 		assertTrue(piece.isWhite());
 
-		// Assert toString
-		assertEquals("P", piece.toString());
+		// Assert getShortName
+		assertEquals("P", piece.getShortName());
 
 		// Fourth Pawn
 		piece = new Pawn(true, Tile.D2.getX(), Tile.D2.getY());
@@ -153,8 +153,8 @@ public class TestPawn {
 		// Assert Color
 		assertTrue(piece.isWhite());
 
-		// Assert toString
-		assertEquals("P", piece.toString());
+		// Assert getShortName
+		assertEquals("P", piece.getShortName());
 
 		// Fifth Pawn
 		piece = new Pawn(true, Tile.E2.getX(), Tile.E2.getY());
@@ -175,8 +175,8 @@ public class TestPawn {
 		// Assert Color
 		assertTrue(piece.isWhite());
 
-		// Assert toString
-		assertEquals("P", piece.toString());
+		// Assert getShortName
+		assertEquals("P", piece.getShortName());
 
 		// Sixth Pawn
 		piece = new Pawn(true, Tile.F2.getX(), Tile.F2.getY());
@@ -197,8 +197,8 @@ public class TestPawn {
 		// Assert Color
 		assertTrue(piece.isWhite());
 
-		// Assert toString
-		assertEquals("P", piece.toString());
+		// Assert getShortName
+		assertEquals("P", piece.getShortName());
 
 		// Seventh Pawn
 		piece = new Pawn(true, Tile.G2.getX(), Tile.G2.getY());
@@ -219,8 +219,8 @@ public class TestPawn {
 		// Assert Color
 		assertTrue(piece.isWhite());
 
-		// Assert toString
-		assertEquals("P", piece.toString());
+		// Assert getShortName
+		assertEquals("P", piece.getShortName());
 
 		// Eighth Pawn
 		piece = new Pawn(true, Tile.H2.getX(), Tile.H2.getY());
@@ -241,8 +241,8 @@ public class TestPawn {
 		// Assert Color
 		assertTrue(piece.isWhite());
 
-		// Assert toString
-		assertEquals("P", piece.toString());
+		// Assert getShortName
+		assertEquals("P", piece.getShortName());
 	}
 
 	@Test
@@ -264,8 +264,8 @@ public class TestPawn {
 		// Assert Color
 		assertFalse(piece.isWhite());
 
-		// Assert toString
-		assertEquals("p", piece.toString());
+		// Assert getShortName
+		assertEquals("p", piece.getShortName());
 
 		// Second Pawn
 		piece = new Pawn(false, Tile.B7.getX(), Tile.B7.getY());
@@ -286,8 +286,8 @@ public class TestPawn {
 		// Assert Color
 		assertFalse(piece.isWhite());
 
-		// Assert toString
-		assertEquals("p", piece.toString());
+		// Assert getShortName
+		assertEquals("p", piece.getShortName());
 
 		// Third Pawn
 		piece = new Pawn(false, Tile.C7.getX(), Tile.C7.getY());
@@ -308,8 +308,8 @@ public class TestPawn {
 		// Assert Color
 		assertFalse(piece.isWhite());
 
-		// Assert toString
-		assertEquals("p", piece.toString());
+		// Assert getShortName
+		assertEquals("p", piece.getShortName());
 
 		// Fourth Pawn
 		piece = new Pawn(false, Tile.D7.getX(), Tile.D7.getY());
@@ -330,8 +330,8 @@ public class TestPawn {
 		// Assert Color
 		assertFalse(piece.isWhite());
 
-		// Assert toString
-		assertEquals("p", piece.toString());
+		// Assert getShortName
+		assertEquals("p", piece.getShortName());
 
 		// Fifth Pawn
 		piece = new Pawn(false, Tile.E7.getX(), Tile.E7.getY());
@@ -352,8 +352,8 @@ public class TestPawn {
 		// Assert Color
 		assertFalse(piece.isWhite());
 
-		// Assert toString
-		assertEquals("p", piece.toString());
+		// Assert getShortName
+		assertEquals("p", piece.getShortName());
 
 		// Sixth Pawn
 		piece = new Pawn(false, Tile.F7.getX(), Tile.F7.getY());
@@ -374,8 +374,8 @@ public class TestPawn {
 		// Assert Color
 		assertFalse(piece.isWhite());
 
-		// Assert toString
-		assertEquals("p", piece.toString());
+		// Assert getShortName
+		assertEquals("p", piece.getShortName());
 
 		// Seventh Pawn
 		piece = new Pawn(false, Tile.G7.getX(), Tile.G7.getY());
@@ -396,8 +396,8 @@ public class TestPawn {
 		// Assert Color
 		assertFalse(piece.isWhite());
 
-		// Assert toString
-		assertEquals("p", piece.toString());
+		// Assert getShortName
+		assertEquals("p", piece.getShortName());
 
 		// Eighth Pawn
 		piece = new Pawn(false, Tile.H7.getX(), Tile.H7.getY());
@@ -418,8 +418,8 @@ public class TestPawn {
 		// Assert Color
 		assertFalse(piece.isWhite());
 
-		// Assert toString
-		assertEquals("p", piece.toString());
+		// Assert getShortName
+		assertEquals("p", piece.getShortName());
 	}
 
 	@Test

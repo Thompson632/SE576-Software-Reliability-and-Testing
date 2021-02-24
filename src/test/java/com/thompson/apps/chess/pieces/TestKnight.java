@@ -88,8 +88,8 @@ public class TestKnight {
 		// Assert Color
 		assertTrue(piece.isWhite());
 
-		// Assert toString
-		assertEquals("N", piece.toString());
+		// Assert getShortName
+		assertEquals("N", piece.getShortName());
 
 		// Second Knight
 		piece = new Knight(true, 0, 6);
@@ -111,8 +111,8 @@ public class TestKnight {
 		// Assert Color
 		assertTrue(piece.isWhite());
 
-		// Assert toString
-		assertEquals("N", piece.toString());
+		// Assert getShortName
+		assertEquals("N", piece.getShortName());
 	}
 
 	@Test
@@ -135,8 +135,8 @@ public class TestKnight {
 		// Assert Color
 		assertFalse(piece.isWhite());
 
-		// Assert toString
-		assertEquals("n", piece.toString());
+		// Assert getShortName
+		assertEquals("n", piece.getShortName());
 
 		// Second Knight
 		piece = new Knight(false, 7, 6);
@@ -158,8 +158,8 @@ public class TestKnight {
 		// Assert Color
 		assertFalse(piece.isWhite());
 
-		// Assert toString
-		assertEquals("n", piece.toString());
+		// Assert getShortName
+		assertEquals("n", piece.getShortName());
 	}
 
 	@Test

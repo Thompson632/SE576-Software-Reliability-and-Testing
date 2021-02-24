@@ -1,8 +1,11 @@
 package com.thompson.apps.chess;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.thompson.apps.chess.board.Cell;
 import com.thompson.apps.chess.board.ChessBoard;
@@ -37,6 +40,9 @@ public class Main {
 	/* Scanner */
 	private Scanner scanner = null;
 
+	/* Flag to Continue Running */
+	private boolean continueRunning = true;
+
 	/**
 	 * FUNCTION_ABSTRACT: Main
 	 * 
@@ -58,7 +64,7 @@ public class Main {
 	}
 
 	/**
-	 * FUNCTION_ABSTRACT: getUserInput
+	 * FUNCTION_ABSTRACT: start
 	 * 
 	 * PURPOSE: Prompts the user with two choices for the process: (1) Validation of
 	 * the entire default Chess Board at the start. (2) Custom Chess Board
@@ -66,29 +72,98 @@ public class Main {
 	 * 
 	 * Based on user selection, different prompts/output will be provided
 	 * 
+	 * NOTE: Exception handling is in place for bad / incorrect user input from the
+	 * start of the program to the end of the program.
+	 * 
 	 * END FUNCTION_ABSTRACT
 	 */
-	private void getUserInput() {
-		System.out.println("Welcome to SE-567 Chess Validation!");
+	private void start() {
+		do {
+			try {
+				System.out.println("Welcome to SE-567 Chess Validation!");
 
-		System.out.println("Please choose one of the following options:");
-		System.out.println("(1) Validation for the Default Chess Board");
-		System.out.println("(2) Custom Chess Board Validation");
+				System.out.println("Please choose one of the following options:");
+				System.out.println("(1) Validation for the Default Chess Board");
+				System.out.println("(2) Custom Chess Board Validation");
 
-		int choice = scanner.nextInt();
+				int choice = scanner.nextInt();
+				scanner.nextLine();
 
-		switch (choice) {
-		case 0:
-			System.out.println("Invalid Input");
-			break;
-		case 1:
-			testDefaultChessBoard();
-			break;
-		case 2:
-			break;
-		default:
-			break;
-		}
+				switch (choice) {
+				case 1:
+					testDefaultChessBoard();
+					break;
+				case 2:
+					testCustomChessBoard();
+					break;
+				default:
+					System.out.println("Invalid Input - please enter 1 or 2.\n");
+					break;
+				}
+
+				promptRunAgain();
+			} catch (InputMismatchException e) {
+				System.out.println("Please enter an integer value.\n");
+				scanner.nextLine();
+			} catch (Exception e) {
+				System.out.println(e);
+				// Call reset here because we caught an exception during one of the following
+				// cases and need to clean-up the data for future runs:
+				// (1) Empty user input for White or Black Pieces
+				// (2) No piece being entered to validate
+				// (3) Piece entered to be validated is not in the List of White or Black Pieces
+				reset();
+			}
+		} while (continueRunning);
+	}
+
+	/**
+	 * FUNCTION_ABSTRACT: testCustomChessBoard
+	 * 
+	 * PURPOSE: Method that does the following actions: (1) Prompts the user for
+	 * input for the White and Black Pieces for the custom board (2) Prompts the
+	 * user for the piece to validate. (3) Calls validation methods to verify and
+	 * print out the piece's valid moves.
+	 * 
+	 * @throws Exception
+	 * 
+	 *                   END FUNCTION_ABSTRACT
+	 */
+	private void testCustomChessBoard() throws Exception {
+		// Step 1. Prompt user for white pieces and read the value
+		System.out.println("ENTER WHITE PIECES: ");
+		String whitePieces = "Rf1, Kg1, Pf2, Ph2, Pg3";
+//				scanner.nextLine();
+
+		// Step 2. Set the local list of white pieces
+		setLocalPieces(whitePieces, true);
+
+		// Step 3. Prompt user for black pieces and read the value
+		System.out.println("ENTER BLACK PIECES:");
+		String blackPieces = "Kb8, Ne8, Pa7, Pb7, Pc7, Ra5";
+//				scanner.nextLine();
+
+		// Step 4. Set the local list of black pieces
+		setLocalPieces(blackPieces, false);
+
+		// Step 5. Set the custom chess board
+		board.setCustomBoard(this.whitePieces, this.blackPieces);
+
+		// Step 6. Prompt the user for piece to validate and read the value
+		System.out.println("ENTER PIECE TO GET MOVES FOR: ");
+		String stringPiece = scanner.nextLine();
+
+		// Step 7. Set the piece to move based on the user input
+		getPieceToMove(stringPiece);
+
+		// Step 8. Print the current state of the board
+		System.out.println("\n " + board.printBoard());
+
+		// Step 9. Get the valid moves for the current piece
+		List<Cell> moves = piece.getValidMoves(board.getChessBoard());
+
+		// Step 10. Print the valid moves in human-readable format
+		printMoves(moves);
 	}
 
 	/**
@@ -100,20 +175,30 @@ public class Main {
 	 * their locations (3) Calls validation methods to verify and print out each
 	 * piece's valid moves
 	 * 
-	 * END FUNCTION_ABSTRACT
+	 * @throws Exception
+	 * 
+	 *                   END FUNCTION_ABSTRACT
 	 */
-	private void testDefaultChessBoard() {
+	private void testDefaultChessBoard() throws Exception {
+		// Step 1. Create new Chess Board and set it to the default layout
 		board = new ChessBoard();
 		board.setDefaultBoard();
+
+		// Step 2. Print current state of the board
 		System.out.println("\n" + board.printBoard());
 
-		// White Pieces
+		// Step 3. Set local list of white pieces to the default
 		System.out.println("WHITE PIECES: ");
-		setWhitePieces(defaultWhitePieces);
+		setLocalPieces(defaultWhitePieces, true);
+
+		// Step 4. Get valid moves for all default layout white pieces
 		testDefaultWhitePieces();
 
+		// Step 5. Set the local list of black pieces to the default
 		System.out.println("BLACK PIECES: ");
-		setBlackPieces(defaultBlackPieces);
+		setLocalPieces(defaultBlackPieces, false);
+
+		// Step 6. Get valid moves for all default layout black pieces
 		testDefaultBlackPieces();
 	}
 
@@ -123,15 +208,14 @@ public class Main {
 	 * PURPOSE: Prints the valid moves for the piece in human-readable format to
 	 * align with an actual chess board piece designation
 	 * 
-	 * @param List<Cell> 
-	 * 		validMoves - List of Valid Moves
+	 * @param List<Cell> validMoves - List of Valid Moves
 	 * 
-	 *      END FUNCTION_ABSTRACT
+	 *                   END FUNCTION_ABSTRACT
 	 */
 	private void printMoves(List<Cell> validMoves) {
 		boolean hasMoves = true;
 		List<Tile> moves = new ArrayList<Tile>();
-		
+
 		String color = (piece.isWhite() ? "WHITE" : "BLACK");
 		System.out.println("LEGAL MOVES FOR " + color + " " + piece.toString() + ":");
 
@@ -147,12 +231,12 @@ public class Main {
 				}
 			}
 		}
-		
+
 		// Only print moves if they are available
 		if (hasMoves) {
 			System.out.println(moves);
 		}
-		
+
 		System.out.println();
 	}
 
@@ -162,95 +246,97 @@ public class Main {
 	 * PURPOSE: Validates each white piece's move by calling the abstract
 	 * getValidMoves method with the current state of the board
 	 * 
-	 * END FUNCTION_ABSTRACT
+	 * @throws Exception
+	 * 
+	 *                   END FUNCTION_ABSTRACT
 	 */
-	private void testDefaultWhitePieces() {
+	private void testDefaultWhitePieces() throws Exception {
 		// Rook
-		String pieceToMove = "Ra1";
-		getPieceToMove(pieceToMove);
+		String pieceToValidate = "Ra1";
+		getPieceToMove(pieceToValidate);
 		List<Cell> moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
 		// Knight
-		pieceToMove = "Nb1";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Nb1";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
 		// Bishop
-		pieceToMove = "Bc1";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Bc1";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
 		// Bishop
-		pieceToMove = "Qd1";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Qd1";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
 		// King
-		pieceToMove = "Ke1";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Ke1";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
 		// Bishop
-		pieceToMove = "Bf1";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Bf1";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
 		// Knight
-		pieceToMove = "Ng1";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Ng1";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
 		// Rook
-		pieceToMove = "Rh1";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Rh1";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
 		// Pawns
-		pieceToMove = "Pa2";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Pa2";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
-		pieceToMove = "Pb2";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Pb2";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
-		pieceToMove = "Pc2";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Pc2";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
-		pieceToMove = "Pd2";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Pd2";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
-		pieceToMove = "Pe2";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Pe2";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
-		pieceToMove = "Pf2";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Pf2";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
-		pieceToMove = "Pg2";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Pg2";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
-		pieceToMove = "Ph2";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Ph2";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 	}
@@ -261,143 +347,149 @@ public class Main {
 	 * PURPOSE: Validates each black piece's move by calling the abstract
 	 * getValidMoves method with the current state of the board
 	 * 
-	 * END FUNCTION_ABSTRACT
+	 * @throws Exception
+	 * 
+	 *                   END FUNCTION_ABSTRACT
 	 */
-	private void testDefaultBlackPieces() {
+	private void testDefaultBlackPieces() throws Exception {
 		// Rook
-		String pieceToMove = "Ra8";
-		getPieceToMove(pieceToMove);
+		String pieceToValidate = "Ra8";
+		getPieceToMove(pieceToValidate);
 		List<Cell> moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
 		// Knight
-		pieceToMove = "Nb8";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Nb8";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
 		// Bishop
-		pieceToMove = "Bc8";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Bc8";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
 		// Bishop
-		pieceToMove = "Qd8";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Qd8";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
 		// King
-		pieceToMove = "Ke8";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Ke8";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
 		// Bishop
-		pieceToMove = "Bf8";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Bf8";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
 		// Knight
-		pieceToMove = "Ng8";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Ng8";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
 		// Rook
-		pieceToMove = "Rh8";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Rh8";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
 		// Pawns
-		pieceToMove = "Pa7";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Pa7";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
-		pieceToMove = "Pb7";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Pb7";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
-		pieceToMove = "Pc7";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Pc7";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
-		pieceToMove = "Pd7";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Pd7";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
-		pieceToMove = "Pe7";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Pe7";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
-		pieceToMove = "Pf7";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Pf7";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
-		pieceToMove = "Pg7";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Pg7";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 
-		pieceToMove = "Ph7";
-		getPieceToMove(pieceToMove);
+		pieceToValidate = "Ph7";
+		getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
 		printMoves(moves);
 	}
 
 	/**
-	 * FUNCTION_ABSTRACT: setWhitePieces
+	 * FUNCTION_ABSTRACT: setLocalPieces
 	 * 
-	 * PURPOSES: Parses the comma-separated String and converts the String to a
-	 * White Piece
+	 * PURPOSE: Parses the comma-separated String and converts it to a List of
+	 * Strings. Then converts the String to an Abstract Piece based on the boolean
+	 * value passed in as a parameter.
 	 * 
-	 * @param String pieces - Comma-Separated String of Pieces
+	 * @param String  pieces - Comma-Separated String of Pieces
+	 * @param boolean isWhite - true if white, false otherwise
+	 * @throws Exception
 	 * 
-	 *               END FUNCTION_ABSTRACT
+	 *                   END FUNCTION_ABSTRACT
 	 */
-	public void setWhitePieces(String pieces) {
-		String[] temp = pieces.split(", ");
+	private void setLocalPieces(String pieces, boolean isWhite) throws Exception {
+		// Step 1. Check to see if pieces is null or is equal to an empty string
+		if (null != pieces && !pieces.equals("")) {
+			// Step 2. Convert comma-separated String to List of String
+			List<String> listPieces = Stream.of(pieces.split(",", -1)).map(String::trim).collect(Collectors.toList());
 
-		for (String str : temp) {
-			AbstractPiece p = convertStringToPiece(str, true);
-			if (null != p) {
-				whitePieces.add(p);
+			// Step 3. Iterate over each String in the List
+			for (String s : listPieces) {
+				// Step 4. Convert the String to an AbstractPiece
+				AbstractPiece p = convertStringToPiece(s, isWhite);
+
+				// Step 5. If the piece is not null, add to either the local list of white or
+				// black pieces
+				if (null != p) {
+					if (isWhite) {
+						whitePieces.add(p);
+					} else {
+						blackPieces.add(p);
+					}
+				}
+			}
+
+			// Step 6. Print the white or black pieces based on the isWhite parameter
+			if (isWhite) {
+				System.out.println(whitePieces);
+			} else {
+				System.out.println(blackPieces);
 			}
 		}
-
-		System.out.println(whitePieces);
-	}
-	
-	/**
-	 * FUNCTION_ABSTRACT: setBlackPieces
-	 * 
-	 * PURPOSES: Parses the comma-separated String and converts the String to a
-	 * Black Piece
-	 * 
-	 * @param String pieces - Comma-Separated String of Pieces
-	 * 
-	 *               END FUNCTION_ABSTRACT
-	 */
-	public void setBlackPieces(String pieces) {
-		String[] temp = pieces.split(", ");
-
-		for (String str : temp) {
-			AbstractPiece p = convertStringToPiece(str, false);
-			if (null != p) {
-				blackPieces.add(p);
-			}
+		// Step 2. If the pieces parameter is null or an empty string, throw an
+		// exception so we can prompt the user to restart the program
+		else {
+			String message = "No " + (isWhite ? "White" : "Black") + " pieces have been entered!\n";
+			throw new Exception(message);
 		}
-
-		System.out.println(blackPieces);
 	}
 
 	/**
@@ -407,43 +499,59 @@ public class Main {
 	 * is white or black. If neither, nothing will be validated
 	 * 
 	 * @param String pieceString
+	 * @throws Exception
 	 * 
-	 *               END FUNCTION_ABSTRACT
+	 *                   END FUNCTION_ABSTRACT
 	 */
-	public void getPieceToMove(String pieceString) {
-		boolean isFound = false;
+	private void getPieceToMove(String pieceString) throws Exception {
+		// Step 1. Check to see if pieces is null or is equal to an empty string
+		if (null != pieceString && !pieceString.equals("")) {
+			boolean isFound = false;
 
-		// Step 1. Get White Piece
-		this.piece = convertStringToPiece(pieceString, true);
+			// Step 2. Get White Piece
+			this.piece = convertStringToPiece(pieceString, true);
 
-		// Step 2. If the Piece is not null, check to see if the list of white pieces
-		// contains the piece to be validated.
-		if (null != piece) {
-			// Step 3. If the List of White Pieces contains the piece, return
-			if (whitePieces.contains(piece)) {
-				isFound = true;
-				return;
-			}
-		}
-
-		// Step 3/4. If the piece has not been found, check List of Black Pieces
-		if (!isFound) {
-			// Step 4/5. Get Black Piece
-			this.piece = convertStringToPiece(pieceString, false);
-
-			// Step 5/6. If the Piece is not null, check to see if the List of Black Pieces
+			// Step 3. If the Piece is not null, check to see if the list of white pieces
 			// contains the piece to be validated.
 			if (null != piece) {
-				// Step 6/7. If the List of Black Pieces contains the piece, return
-				if (blackPieces.contains(piece)) {
+				// Step 4. If the List of White Pieces contains the piece, return
+				if (whitePieces.contains(piece)) {
 					isFound = true;
 					return;
 				}
 			}
-			// Step 6/7. If the Piece is null, there is no piece to be validated
-			else {
-				System.out.println("Piece not found!");
+
+			// Step 4/5. If the piece has not been found, check List of Black Pieces
+			if (!isFound) {
+				// Step 5/6. Get Black Piece
+				this.piece = convertStringToPiece(pieceString, false);
+
+				// Step 6/7. If the Piece is not null, check to see if the List of Black Pieces
+				// contains the piece to be validated.
+				if (null != piece) {
+					// Step 7/8. If the List of Black Pieces contains the piece, return
+					if (blackPieces.contains(piece)) {
+						isFound = true;
+						return;
+					} else {
+						String message = "Piece " + piece.toString()
+								+ " is not found in either the White or Black List of Pieces!\n";
+						throw new Exception(message);
+					}
+				}
+				// Step 6/7. If the Piece is null, there is no piece to be validated
+				else {
+					String message = "Piece " + piece.toString()
+							+ " is not found in either the White or Black List of Pieces!\n";
+					throw new Exception(message);
+				}
 			}
+		}
+		// Step 2. If the pieces parameter is null or an empty string, throw an
+		// exception so we can prompt the user to restart the program
+		else {
+			String message = "No piece has been entered!\n";
+			throw new Exception(message);
 		}
 	}
 
@@ -464,7 +572,7 @@ public class Main {
 		AbstractPiece p = null;
 
 		// Step 1. Get First Letter of Piece (Ex. Ra1 - would return R)
-		String pieceString = piece.substring(0, 1);
+		String pieceString = piece.substring(0, 1).toUpperCase();
 		int row = 0;
 		int column = 0;
 
@@ -495,7 +603,6 @@ public class Main {
 
 		// Step 3. Returns Valid Piece or Null
 		return p;
-
 	}
 
 	/**
@@ -506,26 +613,49 @@ public class Main {
 	 * END FUNCTION_ABSTRACT
 	 */
 	private void promptRunAgain() {
+		// Step 1. Prompt user to validate another board
 		System.out.println("Would you like to validate another Chess Board?");
-		String c = scanner.next();
+		String c = scanner.nextLine();
 
-		while (c.equalsIgnoreCase("yes") || c.equalsIgnoreCase("y")) {
-			start();
+		// Step 2. If the input is not null or an empty String, we need to check the
+		// input
+		if (null != c && !c.equals("")) {
+			// Step 3. If the input is 'yes' or 'y', we clean-up the local attributes
+			// and re-prompt the user
+			if (c.equalsIgnoreCase("yes") || c.equalsIgnoreCase("y")) {
+				reset();
+			}
+			// Step 4. If the input is not 'yes' or 'y', we set continueRunning to false
+			// which will trigger the program to break out of the do/while loop that is
+			// dependent on this variable
+			else {
+				continueRunning = false;
+			}
 		}
-
-		scanner.close();
+		// Step 3. If the input is not null or an empty String, we set continueRunning
+		// to false which will trigger the program to break out of the do/while loop
+		// that is dependent on this variable
+		else {
+			continueRunning = false;
+		}
 	}
 
 	/**
-	 * FUNCTION_ABSTRACT: start
+	 * FUNCTION_ABSTRACT: reset
 	 * 
-	 * PURPOSE: Starts the program
+	 * PURPOSE: Cleans up the local class attributes by creating a new instance of
+	 * the ChessBoard object and clears the Lists of White and Black pieces.
 	 * 
 	 * END FUNCTION_ABSTRACT
 	 */
-	private void start() {
-		getUserInput();
-		promptRunAgain();
+	private void reset() {
+		// Step 1. Garbage clean up for the ChessBoard and then new instance for the ChessBoard
+		board = null;
+		board = new ChessBoard();
+
+		// Step 2. Clear the White and Black Piece Lists
+		whitePieces.clear();
+		blackPieces.clear();
 	}
 
 	/**
@@ -543,7 +673,7 @@ public class Main {
 		try {
 			m.start();
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.printStackTrace(System.err);
 		}
 	}
 }

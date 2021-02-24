@@ -84,8 +84,8 @@ public class TestQueen {
 		// Assert Color
 		assertTrue(piece.isWhite());
 
-		// Assert toString
-		assertEquals("Q", piece.toString());
+		// Assert getShortName
+		assertEquals("Q", piece.getShortName());
 	}
 
 	@Test
@@ -104,8 +104,8 @@ public class TestQueen {
 		// Assert Color
 		assertFalse(piece.isWhite());
 
-		// Assert toString
-		assertEquals("q", piece.toString());
+		// Assert getShortName
+		assertEquals("q", piece.getShortName());
 	}
 
 	@Test

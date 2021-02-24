@@ -83,8 +83,8 @@ public class TestKing {
 		// Assert Color
 		assertTrue(piece.isWhite());
 
-		// Assert toString
-		assertEquals("K", piece.toString());
+		// Assert getShortName
+		assertEquals("K", piece.getShortName());
 	}
 
 	@Test
@@ -102,8 +102,8 @@ public class TestKing {
 		// Assert Color
 		assertFalse(piece.isWhite());
 
-		// Assert toString
-		assertEquals("k", piece.toString());
+		// Assert getShortName
+		assertEquals("k", piece.getShortName());
 	}
 
 	@Test

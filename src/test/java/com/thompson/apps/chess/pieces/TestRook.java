@@ -83,8 +83,8 @@ public class TestRook {
 		// Assert Color
 		assertTrue(piece.isWhite());
 
-		// Assert toString
-		assertEquals("R", piece.toString());
+		// Assert getShortName
+		assertEquals("R", piece.getShortName());
 
 		// Second Rook
 		piece = new Rook(true, Tile.H1.getX(), Tile.H1.getY());
@@ -99,8 +99,8 @@ public class TestRook {
 		// Assert Color
 		assertTrue(piece.isWhite());
 
-		// Assert toString
-		assertEquals("R", piece.toString());
+		// Assert getShortName
+		assertEquals("R", piece.getShortName());
 	}
 
 	@Test
@@ -118,8 +118,8 @@ public class TestRook {
 		// Assert Color
 		assertFalse(piece.isWhite());
 
-		// Assert toString
-		assertEquals("r", piece.toString());
+		// Assert getShortName
+		assertEquals("r", piece.getShortName());
 
 		// Second Rook
 		piece = new Rook(false, Tile.H8.getX(), Tile.H8.getY());
@@ -134,8 +134,8 @@ public class TestRook {
 		// Assert Color
 		assertFalse(piece.isWhite());
 
-		// Assert toString
-		assertEquals("r", piece.toString());
+		// Assert getShortName
+		assertEquals("r", piece.getShortName());
 	}
 
 	@Test

@@ -83,8 +83,8 @@ public class TestBishop {
 		// Assert Color
 		assertTrue(piece.isWhite());
 
-		// Assert toString
-		assertEquals("B", piece.toString());
+		// Assert getShortName
+		assertEquals("B", piece.getShortName());
 
 		// Second Bishop
 		piece = new Bishop(true, 0, 5);
@@ -99,8 +99,8 @@ public class TestBishop {
 		// Assert Color
 		assertTrue(piece.isWhite());
 
-		// Assert toString
-		assertEquals("B", piece.toString());
+		// Assert getShortName
+		assertEquals("B", piece.getShortName());
 	}
 
 	@Test
@@ -118,8 +118,8 @@ public class TestBishop {
 		// Assert Color
 		assertFalse(piece.isWhite());
 
-		// Assert toString
-		assertEquals("b", piece.toString());
+		// Assert getShortName
+		assertEquals("b", piece.getShortName());
 
 		// Second Bishop
 		piece = new Bishop(false, 7, 5);
@@ -134,8 +134,8 @@ public class TestBishop {
 		// Assert Color
 		assertFalse(piece.isWhite());
 
-		// Assert toString
-		assertEquals("b", piece.toString());
+		// Assert getShortName
+		assertEquals("b", piece.getShortName());
 	}
 
 	@Test

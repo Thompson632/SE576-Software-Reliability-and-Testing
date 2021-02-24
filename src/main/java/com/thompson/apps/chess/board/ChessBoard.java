@@ -1,5 +1,7 @@
 package com.thompson.apps.chess.board;
 
+import java.util.List;
+
 import com.thompson.apps.chess.pieces.AbstractPiece;
 import com.thompson.apps.chess.pieces.Bishop;
 import com.thompson.apps.chess.pieces.King;
@@ -12,6 +14,14 @@ public class ChessBoard {
 	/* Chess Board - 2D Array of Cells */
 	private Cell board[][];
 
+	/**
+	 * FUNCTION_ABSTRACT: ChessBoard
+	 * 
+	 * PURPOSE: Default constructor for the ChessBoard. Creates a new 2D-Array of
+	 * Cells and then sets a new Cell object for each position in the array.
+	 * 
+	 * END FUNCTION_ABSTRACT
+	 */
 	public ChessBoard() {
 		board = new Cell[8][8];
 		createBlankBoard();
@@ -76,7 +86,7 @@ public class ChessBoard {
 		board[pieceRow][4] = new Cell(pieceRow, 4, new King(white, pieceRow, 4));
 
 		// Set Pawns
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < board.length; i++) {
 			board[pawnRow][i] = new Cell(pawnRow, i, new Pawn(white, pawnRow, i));
 		}
 	}
@@ -86,17 +96,38 @@ public class ChessBoard {
 	 * 
 	 * PURPOSE: Sets one custom piece on the board
 	 * 
-	 * NOTE: This method is primarily used for testing purposes.
+	 * NOTE: This method is primarily used for testing purposes as well as custom
+	 * board creations.
 	 * 
-	 * @param AbstractPiece 
-	 * 		p - Custom Piece to be set
+	 * @param AbstractPiece p - Custom Piece to be set
 	 * 
-	 *      END FUNCTION_ABSTRACT
+	 *                      END FUNCTION_ABSTRACT
 	 */
 	public void setCustomPiece(AbstractPiece p) {
 		int row = p.getX();
 		int column = p.getY();
 		board[row][column] = new Cell(row, column, p);
+	}
+
+	/**
+	 * FUNCTION_ABSTRACT: setCustomBoard
+	 * 
+	 * PURPOSE: Iterates over List of White and Black pieces and sets them to their
+	 * specific location on the board.
+	 * 
+	 * @param List<AbstractPiece> whitePieces - List of White Pieces
+	 * @param List<AbstractPiece> blackPieces - List of Black Pieces
+	 * 
+	 *                            END FUNCTION_ABSTRACT
+	 */
+	public void setCustomBoard(List<AbstractPiece> whitePieces, List<AbstractPiece> blackPieces) {
+		for (AbstractPiece p : whitePieces) {
+			setCustomPiece(p);
+		}
+
+		for (AbstractPiece p : blackPieces) {
+			setCustomPiece(p);
+		}
 	}
 
 	/**
@@ -108,16 +139,16 @@ public class ChessBoard {
 	 */
 	public String printBoard() {
 		StringBuilder stringBuilder = new StringBuilder(64);
-		
+
 		for (int i = board.length - 1; i >= 0; i--) {
 			for (int j = 0; j < board[i].length; j++) {
-				if (board[i][j].getPiece() != null) {
+				if (null != board[i][j].getPiece()) {
 					stringBuilder.append(board[i][j].getPiece().getShortName());
 				} else {
 					stringBuilder.append(" ");
 				}
 			}
-			
+
 			stringBuilder.append("\n");
 		}
 
