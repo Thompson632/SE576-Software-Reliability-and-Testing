@@ -22,20 +22,11 @@ public class Main {
 	/* Chess Board Reference */
 	private ChessBoard board = null;
 
-	/* List of White Pieces */
-	private List<AbstractPiece> whitePieces = null;
-
-	/* List of Black Pieces */
-	private List<AbstractPiece> blackPieces = null;
-
 	/* Default White Pieces and Locations */
 	private String defaultWhitePieces = null;
 
 	/* Default Black Pieces and Locations */
 	private String defaultBlackPieces = null;
-
-	/* Piece to Validate */
-	private AbstractPiece piece = null;
 
 	/* Scanner */
 	private Scanner scanner = null;
@@ -53,9 +44,6 @@ public class Main {
 	 */
 	public Main() {
 		board = new ChessBoard();
-
-		whitePieces = new ArrayList<AbstractPiece>();
-		blackPieces = new ArrayList<AbstractPiece>();
 
 		defaultWhitePieces = "Ra1, Nb1, Bc1, Qd1, Ke1, Bf1, Ng1, Rh1, Pa2, Pb2, Pc2, Pd2, Pe2, Pf2, Pg2, Ph2";
 		defaultBlackPieces = "Ra8, Nb8, Bc8, Qd8, Ke8, Bf8, Ng8, Rh8, Pa7, Pb7, Pc7, Pd7, Pe7, Pf7, Pg7, Ph7";
@@ -91,10 +79,10 @@ public class Main {
 
 				switch (choice) {
 				case 1:
-					testDefaultChessBoard();
+					validateDefaultChessBoard();
 					break;
 				case 2:
-					testCustomChessBoard();
+					validateCustomChessBoard();
 					break;
 				default:
 					System.out.println("Invalid Input - please enter 1 or 2.\n");
@@ -129,45 +117,45 @@ public class Main {
 	 * 
 	 *                   END FUNCTION_ABSTRACT
 	 */
-	private void testCustomChessBoard() throws Exception {
+	private void validateCustomChessBoard() throws Exception {
 		// Step 1. Prompt user for white pieces and read the value
 		System.out.println("ENTER WHITE PIECES: ");
-		String whitePieces = "Rf1, Kg1, Pf2, Ph2, Pg3";
+		String customWhitePieces = "Rf1, Kg1, Pf2, Ph2, Pg3";
 //				scanner.nextLine();
 
 		// Step 2. Set the local list of white pieces
-		setLocalPieces(whitePieces, true);
+		setPieces(customWhitePieces, true);
 
 		// Step 3. Prompt user for black pieces and read the value
 		System.out.println("ENTER BLACK PIECES:");
-		String blackPieces = "Kb8, Ne8, Pa7, Pb7, Pc7, Ra5";
+		String customBlackPieces = "Kb8, Ne8, Pa7, Pb7, Pc7, Ra5";
 //				scanner.nextLine();
 
 		// Step 4. Set the local list of black pieces
-		setLocalPieces(blackPieces, false);
+		setPieces(customBlackPieces, false);
 
 		// Step 5. Set the custom chess board
-		board.setCustomBoard(this.whitePieces, this.blackPieces);
+		board.setCustomBoard();
 
 		// Step 6. Prompt the user for piece to validate and read the value
 		System.out.println("ENTER PIECE TO GET MOVES FOR: ");
 		String stringPiece = scanner.nextLine();
 
-		// Step 7. Set the piece to move based on the user input
-		getPieceToMove(stringPiece);
-
-		// Step 8. Print the current state of the board
+		// Step 7. Print the current state of the board
 		System.out.println("\n " + board.printBoard());
+
+		// Step 8. Set the piece to move based on the user input
+		AbstractPiece piece = getPieceToMove(stringPiece);
 
 		// Step 9. Get the valid moves for the current piece
 		List<Cell> moves = piece.getValidMoves(board.getChessBoard());
-
+		
 		// Step 10. Print the valid moves in human-readable format
-		printMoves(moves);
+		printMoves(piece, moves);
 	}
 
 	/**
-	 * FUNCTION_ABSTRACT: testDefaultChessBoard
+	 * FUNCTION_ABSTRACT: validateDefaultChessBoard
 	 * 
 	 * PURPOSE: Method that does the following actions: (1) Creates a new instance
 	 * of the ChessBoard and sets the default pieces and their locations (2) Sets
@@ -179,7 +167,7 @@ public class Main {
 	 * 
 	 *                   END FUNCTION_ABSTRACT
 	 */
-	private void testDefaultChessBoard() throws Exception {
+	private void validateDefaultChessBoard() throws Exception {
 		// Step 1. Create new Chess Board and set it to the default layout
 		board = new ChessBoard();
 		board.setDefaultBoard();
@@ -189,21 +177,21 @@ public class Main {
 
 		// Step 3. Set local list of white pieces to the default
 		System.out.println("WHITE PIECES: ");
-		setLocalPieces(defaultWhitePieces, true);
+		setPieces(defaultWhitePieces, true);
 
 		// Step 4. Get valid moves for all default layout white pieces
-		testDefaultWhitePieces();
+		validateDefaultWhitePieces();
 
 		// Step 5. Set the local list of black pieces to the default
 		System.out.println("BLACK PIECES: ");
-		setLocalPieces(defaultBlackPieces, false);
+		setPieces(defaultBlackPieces, false);
 
 		// Step 6. Get valid moves for all default layout black pieces
-		testDefaultBlackPieces();
+		validateDefaultBlackPieces();
 	}
 
 	/**
-	 * FUNCTION_ABSTRACT: testDefaultWhitePieces
+	 * FUNCTION_ABSTRACT: validateDefaultWhitePieces
 	 * 
 	 * PURPOSE: Validates each white piece's move by calling the abstract
 	 * getValidMoves method with the current state of the board
@@ -212,95 +200,95 @@ public class Main {
 	 * 
 	 *                   END FUNCTION_ABSTRACT
 	 */
-	private void testDefaultWhitePieces() throws Exception {
+	private void validateDefaultWhitePieces() throws Exception {
 		// Rook
 		String pieceToValidate = "Ra1";
-		getPieceToMove(pieceToValidate);
+		AbstractPiece piece = getPieceToMove(pieceToValidate);
 		List<Cell> moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		// Knight
 		pieceToValidate = "Nb1";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		// Bishop
 		pieceToValidate = "Bc1";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		// Bishop
 		pieceToValidate = "Qd1";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		// King
 		pieceToValidate = "Ke1";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		// Bishop
 		pieceToValidate = "Bf1";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		// Knight
 		pieceToValidate = "Ng1";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		// Rook
 		pieceToValidate = "Rh1";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		// Pawns
 		pieceToValidate = "Pa2";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		pieceToValidate = "Pb2";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		pieceToValidate = "Pc2";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		pieceToValidate = "Pd2";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		pieceToValidate = "Pe2";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		pieceToValidate = "Pf2";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		pieceToValidate = "Pg2";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		pieceToValidate = "Ph2";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 	}
 
 	/**
@@ -313,99 +301,99 @@ public class Main {
 	 * 
 	 *                   END FUNCTION_ABSTRACT
 	 */
-	private void testDefaultBlackPieces() throws Exception {
+	private void validateDefaultBlackPieces() throws Exception {
 		// Rook
 		String pieceToValidate = "Ra8";
-		getPieceToMove(pieceToValidate);
+		AbstractPiece piece = getPieceToMove(pieceToValidate);
 		List<Cell> moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		// Knight
 		pieceToValidate = "Nb8";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		// Bishop
 		pieceToValidate = "Bc8";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		// Bishop
 		pieceToValidate = "Qd8";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		// King
 		pieceToValidate = "Ke8";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		// Bishop
 		pieceToValidate = "Bf8";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		// Knight
 		pieceToValidate = "Ng8";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		// Rook
 		pieceToValidate = "Rh8";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		// Pawns
 		pieceToValidate = "Pa7";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		pieceToValidate = "Pb7";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		pieceToValidate = "Pc7";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		pieceToValidate = "Pd7";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		pieceToValidate = "Pe7";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		pieceToValidate = "Pf7";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		pieceToValidate = "Pg7";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 
 		pieceToValidate = "Ph7";
-		getPieceToMove(pieceToValidate);
+		piece = getPieceToMove(pieceToValidate);
 		moves = piece.getValidMoves(board.getChessBoard());
-		printMoves(moves);
+		printMoves(piece, moves);
 	}
 
 	/**
-	 * FUNCTION_ABSTRACT: setLocalPieces
+	 * FUNCTION_ABSTRACT: setPieces
 	 * 
 	 * PURPOSE: Parses the comma-separated String and converts it to a List of
 	 * Strings. Then converts the String to an Abstract Piece based on the boolean
@@ -417,7 +405,7 @@ public class Main {
 	 * 
 	 *                   END FUNCTION_ABSTRACT
 	 */
-	protected void setLocalPieces(String pieces, boolean isWhite) throws Exception {
+	protected void setPieces(String pieces, boolean isWhite) throws Exception {
 		// Step 1. Check to see if pieces is null or is equal to an empty string
 		if (null != pieces && !pieces.equals("")) {
 			// Step 2. Convert comma-separated String to List of String
@@ -432,9 +420,9 @@ public class Main {
 				// black pieces
 				if (null != p) {
 					if (isWhite) {
-						whitePieces.add(p);
+						board.addWhitePiece(p);
 					} else {
-						blackPieces.add(p);
+						board.addBlackPiece(p);
 					}
 				} else {
 					String message = "Piece " + s + " was unable to be converted to a Chess Piece. Invalid entry!\n";
@@ -444,9 +432,9 @@ public class Main {
 
 			// Step 6. Print the white or black pieces based on the isWhite parameter
 			if (isWhite) {
-				System.out.println(whitePieces);
+				System.out.println(board.getWhitePieces());
 			} else {
-				System.out.println(blackPieces);
+				System.out.println(board.getBlackPieces());
 			}
 		}
 		// Step 2. If the pieces parameter is null or an empty string, throw an
@@ -468,7 +456,7 @@ public class Main {
 	 * 
 	 *                   END FUNCTION_ABSTRACT
 	 */
-	protected void getPieceToMove(String pieceString) throws Exception {
+	protected AbstractPiece getPieceToMove(String pieceString) throws Exception {
 		// Step 1. Check to see if pieces is null or is equal to an empty string
 		if (null != pieceString && !pieceString.equals("")) {
 			// Step 2. Create two temp white and black pieces based on the pieceString
@@ -480,12 +468,10 @@ public class Main {
 			// throw an exception if they are null or if the lists do not contain
 			// the temporary values
 			if (null != wp && null != bp) {
-				if (whitePieces.contains(wp)) {
-					this.piece = wp;
-					return;
-				} else if (blackPieces.contains(bp)) {
-					this.piece = bp;
-					return;
+				if (board.getWhitePieces().contains(wp)) {
+					return wp;
+				} else if (board.getBlackPieces().contains(bp)) {
+					return bp;
 				} else {
 					String message = "Piece " + wp.toString()
 							+ " is not found in either the White or Black List of Pieces!\n";
@@ -527,8 +513,8 @@ public class Main {
 		if (piece.length() == 3) {
 			// Step 2. Get First Letter of Piece (Ex. Ra1 - would return R)
 			String pieceString = piece.substring(0, 1).toUpperCase();
-			int row = 0;
-			int column = 0;
+			int row = -1;
+			int column = -1;
 
 			// Step 3. Get Tile Location
 			String tileString = piece.substring(1).toUpperCase();
@@ -540,7 +526,13 @@ public class Main {
 				}
 			}
 
-			// Step 4. Create Piece Based on First Letter of String
+			// Step 4. If the row or column is -1, then the user entered an invalid tile
+			// that is not on the chess board. Return null
+			if (row == -1 || column == -1) {
+				return null;
+			}
+
+			// Step 5. Create Piece Based on First Letter of String
 			if (pieceString.equals("K")) {
 				p = new King(isWhite, row, column);
 			} else if (pieceString.equals("Q")) {
@@ -556,7 +548,7 @@ public class Main {
 			}
 		}
 
-		// Step 2/4. Returns Valid Piece or Null
+		// Step 2/6. Returns Valid Piece or Null
 		return p;
 	}
 
@@ -570,7 +562,7 @@ public class Main {
 	 * 
 	 *                   END FUNCTION_ABSTRACT
 	 */
-	private void printMoves(List<Cell> validMoves) {
+	protected void printMoves(AbstractPiece piece, List<Cell> validMoves) {
 		boolean hasMoves = true;
 		List<Tile> moves = new ArrayList<Tile>();
 
@@ -638,6 +630,19 @@ public class Main {
 	}
 
 	/**
+	 * FUNCTION_ABSTRACT: getChessBoard
+	 * 
+	 * PURPOSE: Returns an instance of the ChessBoard for testing purposes.
+	 * 
+	 * @return ChessBoard board
+	 * 
+	 *         END FUNCTION_ABSTRACT
+	 */
+	protected ChessBoard getChessBoard() {
+		return board;
+	}
+
+	/**
 	 * FUNCTION_ABSTRACT: reset
 	 * 
 	 * PURPOSE: Cleans up the local class attributes by creating a new instance of
@@ -646,53 +651,9 @@ public class Main {
 	 * END FUNCTION_ABSTRACT
 	 */
 	private void reset() {
-		// Step 1. Garbage clean up for the ChessBoard and then new instance for the
-		// ChessBoard
+		// Garbage clean up for the ChessBoard and then new instance for theChessBoard
 		board = null;
 		board = new ChessBoard();
-
-		// Step 2. Clear the White and Black Piece Lists
-		whitePieces.clear();
-		blackPieces.clear();
-	}
-
-	/**
-	 * FUNCTION_ABSTRACT: getWhitePieces
-	 * 
-	 * PURPOSE: Returns the list of white pieces
-	 * 
-	 * @return List<AbstractPiece> - whitePieces
-	 * 
-	 *         END FUNCTION_ABSTRACT
-	 */
-	protected List<AbstractPiece> getWhitePieces() {
-		return whitePieces;
-	}
-
-	/**
-	 * FUNCTION_ABSTRACT: getBlackPieces
-	 * 
-	 * PURPOSE: Returns the list of black pieces
-	 * 
-	 * @return List<AbstractPiece> - blackPieces
-	 * 
-	 *         END FUNCTION_ABSTRACT
-	 */
-	protected List<AbstractPiece> getBlackPieces() {
-		return blackPieces;
-	}
-
-	/**
-	 * FUNCTION_ABSTRACT: getPiece
-	 * 
-	 * PURPOSE: Returns the piece to be validated
-	 * 
-	 * @return AbstractPiece - piece
-	 * 
-	 *         END FUNCTION_ABSTRACT
-	 */
-	protected AbstractPiece getPiece() {
-		return piece;
 	}
 
 	/**

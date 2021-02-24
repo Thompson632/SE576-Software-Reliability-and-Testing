@@ -1,5 +1,6 @@
 package com.thompson.apps.chess.board;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,6 +16,12 @@ public class ChessBoard {
 	/* Chess Board - 2D Array of Cells */
 	private Cell board[][];
 
+	/* List of White Pieces */
+	private List<AbstractPiece> whitePieces = null;
+
+	/* List of Black Pieces */
+	private List<AbstractPiece> blackPieces = null;
+
 	/**
 	 * FUNCTION_ABSTRACT: ChessBoard
 	 * 
@@ -26,6 +33,9 @@ public class ChessBoard {
 	public ChessBoard() {
 		board = new Cell[8][8];
 		createBlankBoard();
+
+		whitePieces = new ArrayList<AbstractPiece>();
+		blackPieces = new ArrayList<AbstractPiece>();
 	}
 
 	/**
@@ -121,7 +131,7 @@ public class ChessBoard {
 	 * 
 	 *                            END FUNCTION_ABSTRACT
 	 */
-	public void setCustomBoard(List<AbstractPiece> whitePieces, List<AbstractPiece> blackPieces) {
+	public void setCustomBoard() {
 		for (AbstractPiece p : whitePieces) {
 			setCustomPiece(p);
 		}
@@ -167,5 +177,57 @@ public class ChessBoard {
 	 */
 	public Cell[][] getChessBoard() {
 		return Arrays.copyOf(board, board.length);
+	}
+
+	/**
+	 * FUNCTION_ABSTRACT: addWhitePiece
+	 * 
+	 * PURPOSE: Adds white piece to the list of white pieces
+	 * 
+	 * @param AbstractPiece p - piece
+	 * 
+	 *                      END FUNCTION_ABSTRACT
+	 */
+	public void addWhitePiece(AbstractPiece p) {
+		whitePieces.add(p);
+	}
+
+	/**
+	 * FUNCTION_ABSTRACT: getWhitePieces
+	 * 
+	 * PURPOSE: Returns the list of white pieces
+	 * 
+	 * @return List<AbstractPiece> - whitePieces
+	 * 
+	 *         END FUNCTION_ABSTRACT
+	 */
+	public List<AbstractPiece> getWhitePieces() {
+		return whitePieces;
+	}
+
+	/**
+	 * FUNCTION_ABSTRACT: addBlackPiece
+	 * 
+	 * PURPOSE: Adds black piece to the list of black pieces
+	 * 
+	 * @param AbstractPiece p - piece
+	 * 
+	 *                      END FUNCTION_ABSTRACT
+	 */
+	public void addBlackPiece(AbstractPiece p) {
+		blackPieces.add(p);
+	}
+
+	/**
+	 * FUNCTION_ABSTRACT: getBlackPieces
+	 * 
+	 * PURPOSE: Returns the list of black pieces
+	 * 
+	 * @return List<AbstractPiece> - blackPieces
+	 * 
+	 *         END FUNCTION_ABSTRACT
+	 */
+	public List<AbstractPiece> getBlackPieces() {
+		return blackPieces;
 	}
 }

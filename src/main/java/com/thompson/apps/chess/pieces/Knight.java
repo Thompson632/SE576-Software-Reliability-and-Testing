@@ -6,6 +6,18 @@ import com.thompson.apps.chess.board.Cell;
 
 public class Knight extends AbstractPiece {
 
+	/**
+	 * FUNCTION_ABSTRACT: Knight
+	 * 
+	 * PURPOSE: Default constructor for the Knight Chess Piece that takes in a color
+	 * and an initial position that is passed to the super class AbstractPiece.
+	 * 
+	 * @param boolean isWhite - true if white, false otherwise
+	 * @param int     x - Initial X Position
+	 * @param int     y - Initial Y Position
+	 * 
+	 *                END FUNCTION_ABSTRACT
+	 */
 	public Knight(boolean isWhite, int x, int y) {
 		super(isWhite, x, y);
 	}

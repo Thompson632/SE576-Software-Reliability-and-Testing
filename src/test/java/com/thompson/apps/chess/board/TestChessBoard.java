@@ -4,9 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -134,24 +131,40 @@ public class TestChessBoard {
 
 	@Test
 	public void testSetCustomBoard() {
-		List<AbstractPiece> w = new ArrayList<AbstractPiece>();
-		w.add(new Rook(true, 4, 4));
+		board.addWhitePiece(new Rook(true, 4, 4));
+		board.addBlackPiece(new Rook(false, 5, 5));
 
-		List<AbstractPiece> b = new ArrayList<AbstractPiece>();
-		b.add(new Rook(false, 5, 5));
-
-		board.setCustomBoard(w, b);
+		board.setCustomBoard();
 
 		Cell[][] tmpBoard = board.getChessBoard();
 
 		// White Rook
+		// Board Assertion
 		Cell c = tmpBoard[4][4];
 		assertTrue(c.getPiece() instanceof Rook);
 		assertTrue(c.getPiece().isWhite());
+		assertEquals(4, c.getPiece().getX());
+		assertEquals(4, c.getPiece().getY());
+		// List Assertion
+		assertEquals(1, board.getWhitePieces().size());
+		AbstractPiece p = board.getWhitePieces().get(0);
+		assertTrue(p instanceof Rook);
+		assertTrue(p.isWhite());
+		assertEquals(4, p.getX());
+		assertEquals(4, p.getY());
 
 		// Black Rook
 		c = tmpBoard[5][5];
 		assertTrue(c.getPiece() instanceof Rook);
 		assertFalse(c.getPiece().isWhite());
+		assertEquals(5, c.getPiece().getX());
+		assertEquals(5, c.getPiece().getY());
+		// List Assertion
+		assertEquals(1, board.getBlackPieces().size());
+		p = board.getBlackPieces().get(0);
+		assertTrue(p instanceof Rook);
+		assertFalse(p.isWhite());
+		assertEquals(5, p.getX());
+		assertEquals(5, p.getY());
 	}
 }

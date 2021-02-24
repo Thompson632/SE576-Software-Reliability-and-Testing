@@ -9,27 +9,24 @@ import com.thompson.apps.chess.board.Tile;
 public abstract class AbstractPiece {
 	/* Initial X Location - Not on Board */
 	private int x = -1;
-	
+
 	/* Initial Y Location - Not on Board */
 	private int y = -1;
-	
+
 	/* Piece Color */
 	private boolean isWhite = false;
-	
+
 	/* Represents a List of Valid Moves */
 	protected List<Cell> validMoves = null;
-	
+
 	/**
 	 * FUNCTION_ABSTRACT: AbstractPiece
 	 * 
-	 * PURPOSE: Default constructor for the AbstractPiece. 
+	 * PURPOSE: Default constructor for the AbstractPiece.
 	 * 
-	 * @param boolean 
-	 * 		isWhite - true if white, false if black
-	 * @param int 
-	 * 		x - X position of the Piece at creation
-	 * @param int
-	 * 		y - Y Position of the Piece at creation
+	 * @param boolean isWhite - true if white, false if black
+	 * @param int     x - X position of the Piece at creation
+	 * @param int     y - Y Position of the Piece at creation
 	 * 
 	 *                END FUNCTION_ABSTRACT
 	 */
@@ -37,10 +34,10 @@ public abstract class AbstractPiece {
 		this.isWhite = isWhite;
 		this.x = x;
 		this.y = y;
-		
+
 		validMoves = new ArrayList<Cell>();
 	}
-	
+
 	/**
 	 * FUNCTION_ABSTRACT: isWhite
 	 * 
@@ -53,7 +50,7 @@ public abstract class AbstractPiece {
 	public boolean isWhite() {
 		return isWhite;
 	}
-	
+
 	/**
 	 * FUNCTION_ABSTRACT: getValidMoves
 	 * 
@@ -66,7 +63,7 @@ public abstract class AbstractPiece {
 	 *         END FUNCTION_ABSTRACT
 	 */
 	public abstract List<Cell> getValidMoves(Cell board[][]);
-	
+
 	/**
 	 * FUNCTION_ABSTRACT: validateVerticalMoves
 	 * 
@@ -136,7 +133,7 @@ public abstract class AbstractPiece {
 	 * PURPOSE: Validates Diagonal North-West Moves
 	 * 
 	 * NOTE: Shifts each row upwards and each column to the left each iteration
-	 * 		 
+	 * 
 	 * @param Cell[][] board
 	 * @param int      posX
 	 * @param int      posY
@@ -273,7 +270,7 @@ public abstract class AbstractPiece {
 			posY++;
 		}
 	}
-	
+
 	/**
 	 * FUNCTION_ABSTRACT: validateNorthMoves
 	 * 
@@ -303,7 +300,7 @@ public abstract class AbstractPiece {
 				validMoves.add(board[posX][getY()]);
 				break;
 			}
-			
+
 			posX++;
 		}
 	}
@@ -341,7 +338,7 @@ public abstract class AbstractPiece {
 			posX--;
 		}
 	}
-	
+
 	/**
 	 * FUNCTION_ABSTRACT: validateEastMoves
 	 * 
@@ -371,7 +368,7 @@ public abstract class AbstractPiece {
 				validMoves.add(board[getX()][posY]);
 				break;
 			}
-			
+
 			posY++;
 		}
 	}
@@ -405,7 +402,7 @@ public abstract class AbstractPiece {
 				validMoves.add(board[getX()][posY]);
 				break;
 			}
-			
+
 			posY--;
 		}
 	}
@@ -441,8 +438,9 @@ public abstract class AbstractPiece {
 					validMoves.add(c);
 				}
 			}
-		}}
-	
+		}
+	}
+
 	/**
 	 * FUNCTION_ABSTRACT: getPieceEnum
 	 * 
@@ -453,7 +451,7 @@ public abstract class AbstractPiece {
 	 *         END FUNCTION_ABSTRACT
 	 */
 	public abstract PieceEnum getPieceEnum();
-	
+
 	/**
 	 * FUNCTION_ABTRACT: toString
 	 * 
@@ -465,9 +463,9 @@ public abstract class AbstractPiece {
 	 *         END FUNCTION_ABSTRACT
 	 */
 	public String toString() {
-		return getPieceEnum().toString() + " " + Tile.getTileAtPosition(getX(), getY()); 
+		return getPieceEnum().toString() + " " + Tile.getTileAtPosition(getX(), getY());
 	}
-	
+
 	/**
 	 * FUNCTION_ABSTRACT: toString
 	 * 
@@ -481,7 +479,7 @@ public abstract class AbstractPiece {
 	public String getShortName() {
 		return isWhite() ? getPieceEnum().getName() : getPieceEnum().getName().toLowerCase();
 	}
-	
+
 	/**
 	 * FUNCTION_ABSTRACT: getX
 	 * 
