@@ -85,7 +85,6 @@
 					<platforms>
 						<platform>unix</platform>
 					</platforms>
-					<logsDirectory>logs</logsDirectory>
 					<includeConfigurationDirectoryInClasspath>false</includeConfigurationDirectoryInClasspath>
 					<copyConfigurationDirectory>true</copyConfigurationDirectory>
 					<repositoryName>lib</repositoryName>

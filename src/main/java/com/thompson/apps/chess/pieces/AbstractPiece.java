@@ -96,7 +96,6 @@ public abstract class AbstractPiece {
 
 		posY = getY() - 1;
 		validateWestMoves(board, posY);
-
 	}
 
 	/**
@@ -124,7 +123,6 @@ public abstract class AbstractPiece {
 		posX = getX() + 1;
 		posY = getY() + 1;
 		validateNorthEastMoves(board, posX, posY);
-
 	}
 
 	/**

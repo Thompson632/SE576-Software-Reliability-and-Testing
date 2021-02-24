@@ -20,7 +20,7 @@ The project is formatted to be built using Maven and allows for better dependenc
 * Open Eclipse or another IDE -> Select Import -> Maven Project -> Location of Repository
 
 
-### Executing program
+### Executing Program
 
 From Eclipse (or another IDE)
 * Navigate to Main.java and select the Run option in the IDE.
@@ -30,6 +30,39 @@ From Command Line
 * cd target/appassembler/bin
 * ./RunChess.sh
 
+
+### Executing Test Suite
+
+From Eclipse (or another IDE)
+* Select the src/test/java package, right-click, and select Run As -> JUnit Test
+* Open up the JUnit perspective and verify that all unit tests have passed successfully
+
+From Command Line
+* Navigate to the top-level repository and then execute the following commands:
+* mvn clean package site
+* The above command will compile all source and test code as well as run all unit tests.
+* If the build succeeds, all unit tests have passed successfully
+
+
+### Executing Test Suite Code Coverage
+
+From Eclipse (or another IDE)
+* Select the src/test/java package, right-click, and select Coverage As -> JUnit Test
+* Open up the Coverage perspective and verify the current view is filtered on Branches as opposed to Instructions.
+* Once verified, select the src/main/java package and verify coverage is above 80%.
+
+From Command Line
+* Navigate to the top-level repository and then execute the following commands:
+* mvn clean package site
+* Once the build succeeds, cd target/site/jacoco/ and open the index.html
+* Verify that the coverage is above 80%.
+
+
+### Deliverables
+
+Project reports are located in the deliverables.tar.gz file. Run the following command to open the tar file:
+* Navigate to the top-level repository and then execute the following command:
+* tar -xvf deliverables.tar.gz
 
 ## Authors
 
