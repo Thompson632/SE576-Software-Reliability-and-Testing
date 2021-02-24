@@ -1,5 +1,6 @@
 package com.thompson.apps.chess.board;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.thompson.apps.chess.pieces.AbstractPiece;
@@ -165,6 +166,6 @@ public class ChessBoard {
 	 *         END FUNCTION_ABSTRACT
 	 */
 	public Cell[][] getChessBoard() {
-		return this.board;
+		return Arrays.copyOf(board, board.length);
 	}
 }

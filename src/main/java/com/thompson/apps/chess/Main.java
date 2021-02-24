@@ -60,7 +60,7 @@ public class Main {
 		defaultWhitePieces = "Ra1, Nb1, Bc1, Qd1, Ke1, Bf1, Ng1, Rh1, Pa2, Pb2, Pc2, Pd2, Pe2, Pf2, Pg2, Ph2";
 		defaultBlackPieces = "Ra8, Nb8, Bc8, Qd8, Ke8, Bf8, Ng8, Rh8, Pa7, Pb7, Pc7, Pd7, Pe7, Pf7, Pg7, Ph7";
 
-		scanner = new Scanner(System.in);
+		scanner = new Scanner(System.in, "UTF-8");
 	}
 
 	/**
@@ -103,10 +103,10 @@ public class Main {
 
 				promptRunAgain();
 			} catch (InputMismatchException e) {
-				System.out.println("Please enter an integer value.\n");
+				System.err.println("Please enter an integer value.\n");
 				scanner.nextLine();
 			} catch (Exception e) {
-				System.out.println(e);
+				System.err.println(e);
 				// Call reset here because we caught an exception during one of the following
 				// cases and need to clean-up the data for future runs:
 				// (1) Empty user input for White or Black Pieces
@@ -541,7 +541,7 @@ public class Main {
 				}
 				// Step 6/7. If the Piece is null, there is no piece to be validated
 				else {
-					String message = "Piece " + piece.toString()
+					String message = "Piece " + pieceString
 							+ " is not found in either the White or Black List of Pieces!\n";
 					throw new Exception(message);
 				}
@@ -629,6 +629,8 @@ public class Main {
 			// which will trigger the program to break out of the do/while loop that is
 			// dependent on this variable
 			else {
+				System.out.println("\nProgram Complete!");
+				scanner.close();
 				continueRunning = false;
 			}
 		}
@@ -636,6 +638,8 @@ public class Main {
 		// to false which will trigger the program to break out of the do/while loop
 		// that is dependent on this variable
 		else {
+			System.out.println("\nProgram Complete!");
+			scanner.close();
 			continueRunning = false;
 		}
 	}
