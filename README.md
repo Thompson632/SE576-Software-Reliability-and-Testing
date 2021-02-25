@@ -1,6 +1,6 @@
 # Chess Repository
 
-The purpose of this source code repository is to hold all source and deliverables required for the SE576 at Drexel University Chess Validation library for Winter 2021.
+The purpose of this repository is to hold the assignment and project deliverables for SE576 Software Reliability and Testing at Drexel University for the Winter 2020-2021 Quarter.
 
 ## Description
 
@@ -60,9 +60,16 @@ From Command Line
 
 ### Deliverables
 
-Project reports are located in the deliverables.tar.gz file. Run the following command to open the tar file:
+Project reports and deliverables are located in the deliverables.tar.gz file. Run the following command to open the tar file:
 * Navigate to the top-level repository and then execute the following command:
 * tar -xvf deliverables.tar.gz
+
+
+### Pre-Conditions / Not Implemented as of 02/22/2021
+
+The project does not do the following:
+* Source does not check to see if a piece is already in a set place upon custom board creation. If subsequent color pieces and/or different color pieces are to be placed on the same cell, the source will use the last piece as the real piece to be placed.
+* Logic related to castling with a King and a Rook is not implemented.
 
 ## Authors
 
