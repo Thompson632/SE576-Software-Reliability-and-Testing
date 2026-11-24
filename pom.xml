@@ -27,7 +27,7 @@
 		<maven.jacoco.version>0.8.1</maven.jacoco.version>
 
 		<!-- External Dependency Versions -->
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<spotbugs.version>4.2.0</spotbugs.version>
 	</properties>
 
